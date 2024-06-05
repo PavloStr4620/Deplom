@@ -42,25 +42,20 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         // для передачі запитів далі по ланцюжку фільтрів
         String authHeader = request.getHeader("Authorization");
         // Отримання заголовка авторизації з запиту
-
         if(authHeader == null || !authHeader.startsWith("Bearer ")) {
             // Перевірка, чи заголовок авторизації відсутній або не починається з "Bearer "
             // Якщо так, запустити наступний фільтр у ланцюжку та завершити виконання цього фільтру
             filterChain.doFilter(request,response);
             return;
         }
-
         // Витягнення токена з заголовка авторизації
         String token = authHeader.substring(7);
-
         // Вилучення ім'я користувача з токена
         String username = jwtService.extractUsername(token);
-
         // Перевірка, чи користувача не має вже аутентифіковано в поточному контексті безпеки та чи токен є валідним
         if(username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             // Завантаження деталей користувача за ім'ям користувача
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-
             // Перевірка валідності токена
             if(jwtService.isValid(token, userDetails)) {
                 // Створення об'єкту аутентифікації з деталями користувача та його ролями
@@ -75,7 +70,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
         }
-
         // Продовження ланцюжка фільтрів
         filterChain.doFilter(request, response);
     }
