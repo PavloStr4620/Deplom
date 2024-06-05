@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="ua" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body>
+
+<div th:replace="~{blocks/header :: header}"></div>
+
+<div class="container my-5">
+    <div class="col-md-8 mt-2" th:if="${tripod_id.isPresent()}" th:with="tripod=${tripod_id.get()}">
+        <div class="row">
+            <div class="col-md-8">
+                <img src="https://i1.adis.ws/i/canon/eos-r6-rf24-105mm-f4_7.1_is_stm_front-on_square_6412568cc0e7484b96bd55e43069a56c?$prod-grid-1by1-jpg$" class="img-fluid" alt="Фото товару">
+            </div>
+            <div class="col-md-4">
+                <h2 class="card-text" th:text="'Тип: ' + ${tripod.type}"></h2>
+                <p class="card-text" th:text="'Головка: ' + ${tripod.head}"></p>
+                <p class="card-text" th:text="'Розміри (від ? до ?): ' + ${tripod.dimensions}"></p>
+                <p class="card-text" th:text="'Матеріал: ' + ${tripod.material}"></p>
+                <p class="card-text" th:text="'Секції ніжок: ' + ${tripod.legSection}"></p>
+                <p class="card-text" th:text="'Тип головки: ' + ${tripod.headType}"></p>
+                <h5 th:text="'Ціна: ' + ${tripod.price}"></h5>
+                <button class="btn btn-primary" id="addToCart" th:data-name="${tripod.type}" th:data-price="${tripod.price}">В корзину</button>
+            </div>
+            <div class="col-md-4 mt-3">
+                <button type="button" class="btn btn-primary" id="updateToTripodCart" th:data-id="${tripod.id}">Редагувати</button>
+                <button type="button" class="btn btn-primary" id="deleteToTripodCart" th:data-id="${tripod.id}">Видалити</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</div>
+</div>
+
+<div th:replace="~{blocks/footer :: footer}"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.getElementById('addToCart').addEventListener('click', function() {
+        const name = this.getAttribute('data-name');
+        const price = this.getAttribute('data-price');
+
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        cart.push({ name, price });
+        localStorage.setItem('cart', JSON.stringify(cart));
+
+        alert('Товар додано до корзини');
+    });
+
+    //Відкриває сторінку з редагуванням і передає туди id
+    const updateToCameraCartButton = document.getElementById('updateToTripodCart');
+
+    updateToCameraCartButton.addEventListener('click', function() {
+        const tripodId = this.getAttribute('data-id');
+
+        // Передайте id камеры на страницу редактирования
+        window.location.href = '/tripod-page/page-update-tripod?id=' + tripodId;
+    });
+
+    //Відкриває сторінку з видаленням товару через id
+    const deleteFromCartButton = document.getElementById('deleteToTripodCart');
+
+    deleteFromCartButton.addEventListener('click', function() {
+        const tripodId = this.getAttribute('data-id');
+
+        const confirmation = confirm('Ви впевнені, що хочете видалити цей товар?');
+
+        if (confirmation) {
+            // Передайте id камери на сторінку видалення
+            window.location.href = '/tripod-page/delete-tripod?id=' + tripodId;
+        }
+    });
+</script>
+
+</body>
+</html>

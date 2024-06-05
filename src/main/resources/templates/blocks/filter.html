@@ -1,0 +1,93 @@
+<!-- Колонка з фільтрами -->
+<div class="col-lg-2" th:fragment="filter">
+
+    <h2>Фільтр</h2>
+    <form method="get" action="/camera-page/search-camera">
+<!--        <h5>Бренд</h5>-->
+<!--        <div class="form-check">-->
+<!--            <input class="form-check-input" type="checkbox" name="filterOptions" id="option1" value="option1"-->
+<!--                   checked>-->
+<!--            <label class="form-check-label" for="option1">-->
+<!--                Опція 1-->
+<!--            </label>-->
+<!--        </div>-->
+<!--        <div class="form-check">-->
+<!--            <input class="form-check-input" type="checkbox" name="filterOptions" id="option2" value="option2">-->
+<!--            <label class="form-check-label" for="option2">-->
+<!--                Опція 2-->
+<!--            </label>-->
+<!--        </div>-->
+<!--        <div class="form-check">-->
+<!--            <input class="form-check-input" type="checkbox" name="filterOptions" id="option3" value="option3">-->
+<!--            <label class="form-check-label" for="option3">-->
+<!--                Опція 3-->
+<!--            </label>-->
+<!--        </div>-->
+
+
+<!--        <h5>Матриця</h5>-->
+<!--        <div class="form-check">-->
+<!--            <input class="form-check-input" type="checkbox" name="filterOptions" id="option4" value="option4"-->
+<!--                   checked>-->
+<!--            <label class="form-check-label" for="option1">-->
+<!--                Опція 1-->
+<!--            </label>-->
+<!--        </div>-->
+<!--        <div class="form-check">-->
+<!--            <input class="form-check-input" type="checkbox" name="filterOptions" id="option5" value="option5">-->
+<!--            <label class="form-check-label" for="option2">-->
+<!--                Опція 2-->
+<!--            </label>-->
+<!--        </div>-->
+<!--        <div class="form-check">-->
+<!--            <input class="form-check-input" type="checkbox" name="filterOptions" id="option6" value="option6">-->
+<!--            <label class="form-check-label" for="option3">-->
+<!--                Опція 3-->
+<!--            </label>-->
+<!--        </div>-->
+
+
+<!--        <h5>Дісплей</h5>-->
+<!--        <div class="form-check">-->
+<!--            <input class="form-check-input" type="checkbox" name="filterOptions" id="option7" value="option7"-->
+<!--                   checked>-->
+<!--            <label class="form-check-label" for="option1">-->
+<!--                Опція 1-->
+<!--            </label>-->
+<!--        </div>-->
+<!--        <div class="form-check">-->
+<!--            <input class="form-check-input" type="checkbox" name="filterOptions" id="option8" value="option8">-->
+<!--            <label class="form-check-label" for="option2">-->
+<!--                Опція 2-->
+<!--            </label>-->
+<!--        </div>-->
+<!--        <div class="form-check">-->
+<!--            <input class="form-check-input" type="checkbox" name="filterOptions" id="option9" value="option9">-->
+<!--            <label class="form-check-label" for="option3">-->
+<!--                Опція 3-->
+<!--            </label>-->
+<!--        </div>-->
+
+
+        <h5>Ціна</h5>
+        <div class="col-md-4">
+            <label for="price-from" class="form-label">Від</label>
+            <input type="number" class="form-control" id="price-from" name="priceFrom" placeholder="Мін. ціна" min="0">
+        </div>
+        <div class="col-md-4 mb-3">
+            <label for="price-to" class="form-label">До</label>
+            <input type="number" class="form-control" id="price-to" name="priceTo" placeholder="Макс. ціна" max="99999">
+        </div>
+
+        <select class="form-control me-2" name="sort" id="sort">
+            <option value="priceAsc">Ціна (зростання)</option>
+            <option value="priceDesc">Ціна (спадання)</option>
+            <option value="nameAsc">Назва (А-Я)</option>
+            <option value="nameDesc">Назва (Я-А)</option>
+        </select>
+
+
+        <button type="submit" class="btn btn-primary mt-3" >Відфільтрувати</button>
+        <button type="submit" class="btn btn-primary mt-3" onclick="window.location.href='/camera-page'">Скинути фільтр</button>
+    </form>
+</div>

@@ -1,8 +1,6 @@
 package com.example.deplom.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,14 +14,16 @@ import lombok.Setter;
 @Table(name = "camera")
 public class Camera {
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private String brand; // Бренд
     private String model; // Модель
     private String matrix; // Матриця
-    private double display; // Дисплей
+    private String shootingFeatures; // Зйомка та функції
     private String video; // Рошиверння відео
-    private int cameraWeight; // Вага
-    private String focusing; // Фокусування
+    private String cameraWeight; // Вага
+    private String multiplicityOfIncrease; // Кратність збільшення
     private String displayDiagonal; // Діагональ дисплея
     private double price; // Ціна
+
 }

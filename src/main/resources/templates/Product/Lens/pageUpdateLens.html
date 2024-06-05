@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Створення товару</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body>
+<div th:replace="~{blocks/header :: header}"></div>
+
+<div class="container" th:if="${lens_id.isPresent()}" th:with="lens=${lens_id.get()}">
+    <h1>Редагування товару</h1>
+
+    <form method="post" th:action="'/lens-page/page-update-lens?id=' + ${lens.id}" class="row g-3">
+        <div class="col-md-6">
+            <label for="bayonet" class="form-label">Байонет:</label>
+            <input th:value="${lens.bayonet}" type="text" class="form-control" id="bayonet" name="bayonet" required>
+        </div>
+
+        <div class="col-md-6">
+            <label for="focalLength" class="form-label">Фокусна відстань:</label>
+            <input th:value="${lens.focalLength}" type="focalLength" class="form-control" id="focalLength" name="focalLength" required>
+        </div>
+
+        <div class="col-md-6">
+            <label for="system" class="form-label">Тип об'єктива:</label>
+            <input th:value="${lens.system}" type="text" class="form-control" id="system" name="system" required>
+        </div>
+
+        <div class="col-md-6">
+            <label for="focus" class="form-label">Фокусування:</label>
+            <input th:value="${lens.focus}" type="text" class="form-control" id="focus" name="focus" required>
+        </div>
+
+        <div class="col-md-6">
+            <label for="manufacturers" class="form-label">Діафрагма:</label>
+            <input th:value="${lens.manufacturers}" type="text" class="form-control" id="manufacturers" name="manufacturers" required>
+        </div>
+
+        <div class="col-md-6">
+            <label for="viewingAngle" class="form-label">Кут огляду:</label>
+            <input th:value="${lens.viewingAngle}" type="text" class="form-control" id="viewingAngle" name="viewingAngle" required>
+        </div>
+
+        <div class="col-md-6">
+            <label for="matrixSize" class="form-label">Розмір матриці:</label>
+            <input th:value="${lens.matrixSize}" type="text" class="form-control" id="matrixSize" name="matrixSize" required>
+        </div>
+
+        <div class="col-md-6">
+            <label for="weight" class="form-label">Вага:</label>
+            <input th:value="${lens.weight}" type="number" class="form-control" id="weight" name="weight" required>
+        </div>
+
+        <div class="col-md-6">
+            <label for="price" class="form-label">Ціна:</label>
+            <input th:value="${lens.price}" type="number" class="form-control" id="price" name="price" required>
+        </div>
+
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary">Обновити</button>
+        </div>
+    </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-xrBzlq8r1jYM7YkCMQ33rltb05e9YxQv5oav0R2qNq911jAkYp16g2q5e26jB7" crossorigin="anonymous"></script>
+</body>
+</html>

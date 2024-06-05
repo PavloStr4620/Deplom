@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Створення товару</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body>
+<div th:replace="~{blocks/header :: header}"></div>
+
+<div class="container">
+    <h1>Створення нового товару</h1>
+
+    <form method="post" action="/camera-page/page-create-camera" class="row g-3">
+        <div class="col-md-6">
+            <label for="brand" class="form-label">Бренд:</label>
+            <input type="text" class="form-control" id="brand" name="brand" required>
+        </div>
+
+        <div class="col-md-6">
+            <label for="model" class="form-label">Модель:</label>
+            <input type="text" class="form-control" id="model" name="model" required>
+        </div>
+
+        <div class="col-md-6">
+            <label for="matrix" class="form-label">Матриця:</label>
+            <select class="form-select" id="matrix" name="matrix" required>
+                <option value="" disabled selected>Виберіть тип матриці</option>
+                <option value="≤ 1/2.4&quot;">≤ 1/2.4"</option>
+                <option value="1/2.4-1/1.6&quot;">1/2.4-1/1.6"</option>
+                <option value="1&quot; (13х8 мм)">1" (13х8 мм)</option>
+                <option value="4/3&quot;">4/3"</option>
+                <option value="APS-H">APS-H</option>
+                <option value="big frame">big frame</option>
+                <option value="APS-C">APS-C</option>
+                <option value="full frame">full frame</option>
+            </select>
+        </div>
+
+
+        <div class="col-md-6">
+            <label for="shootingFeatures" class="form-label">Дисплей:</label>
+            <select class="form-select" id="shootingFeatures" name="shootingFeatures" required>
+                <option value="" disabled selected>Виберіть функції дисплея</option>
+                <option value="сенсорний екран">сенсорний екран</option>
+                <option value="поворотний екран">поворотний екран</option>
+                <option value="CMOS BSI матриця">CMOS BSI матриця</option>
+                <option value="стабілізація зображення">стабілізація зображення</option>
+                <option value="«true» стабілізація">«true» стабілізація</option>
+                <option value="видошукач">видошукач</option>
+                <option value="вбудований спалах">вбудований спалах</option>
+                <option value="підключення спалаху">підключення спалаху</option>
+                <option value="чистка матриці">чистка матриці</option>
+                <option value="відсутність фільтра АА">відсутність фільтра АА</option>
+                <option value="привод автофокусу">привод автофокусу</option>
+                <option value="механічний затвор">механічний затвор</option>
+                <option value="електронний затвор">електронний затвор</option>
+                <option value="2 диски управління">2 диски управління</option>
+                <option value="2 слоти карт пам'яті">2 слоти карт пам'яті</option>
+                <option value="живлення USB-C (Power Delivery)">живлення USB-C (Power Delivery)</option>
+                <option value="живлення від батарейок">живлення від батарейок</option>
+                <option value="захист від вологи">захист від вологи</option>
+            </select>
+        </div>
+
+
+        <div class="col-md-6">
+            <label for="video" class="form-label">Розширення відео:</label>
+            <select class="form-select" id="video" name="video" required>
+                <option value="" disabled selected>Виберіть роздільну здатність відео</option>
+                <option value="Full HD (1080)">Full HD (1080)</option>
+                <option value="швидкісна Full HD (1080)">швидкісна Full HD (1080)</option>
+                <option value="Ultra HD (4K)">Ultra HD (4K)</option>
+                <option value="швидкісна Ultra HD (4K)">швидкісна Ultra HD (4K)</option>
+                <option value="вище 4КО">вище 4КО</option>
+            </select>
+        </div>
+
+        <div class="col-md-6">
+            <label for="cameraWeight" class="form-label">Вага:</label>
+            <select class="form-select" id="cameraWeight" name="cameraWeight" required>
+                <option value="" disabled selected>Виберіть вагу камери</option>
+                <option value="≤ 300 г">≤ 300 г</option>
+                <option value="301 - 500 г">301 - 500 г</option>
+                <option value="501 - 700 г">501 - 700 г</option>
+                <option value="> 700 г">> 700 г</option>
+            </select>
+        </div>
+
+
+        <div class="col-md-6">
+            <label for="multiplicityOfIncrease" class="form-label">Кратність збільшення:</label>
+            <select class="form-select" id="multiplicityOfIncrease" name="multiplicityOfIncrease" required>
+                <option value="" disabled selected>Виберіть кратність збільшення</option>
+                <option value="11-20">11-20</option>
+                <option value="21-30">21-30</option>
+                <option value=">30">30</option>
+            </select>
+        </div>
+
+        <div class="col-md-6">
+            <label for="displayDiagonal" class="form-label">Діагональ дисплея:</label>
+            <select class="form-select" id="displayDiagonal" name="displayDiagonal" required>
+                <option value="" disabled selected>Виберіть діагональ дисплея</option>
+                <option value="2.7">2.7"</option>
+                <option value="2.8">2.8"</option>
+                <option value="3.0">3.0"</option>
+                <option value="3.2">3.2"</option>
+                <option value="3.5">3.5"</option>
+            </select>
+        </div>
+
+
+        <div class="col-md-6">
+            <label for="price" class="form-label">Ціна:</label>
+            <input type="number" class="form-control" id="price" name="price" required>
+        </div>
+
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary">Створити</button>
+        </div>
+    </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-xrBzlq8r1jYM7YkCMQ33rltb05e9YxQv5oav0R2qNq911jAkYp16g2q5e26jB7" crossorigin="anonymous"></script>
+</body>
+</html>

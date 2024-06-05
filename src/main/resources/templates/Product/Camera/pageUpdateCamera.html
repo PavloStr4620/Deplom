@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Створення товару</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body>
+<div th:replace="~{blocks/header :: header}"></div>
+
+<div class="container" th:if="${camera_id.isPresent()}" th:with="camera=${camera_id.get()}">
+    <h1>Редагування товару</h1>
+
+    <form method="post" th:action="'/camera-page/page-update-camera?id=' + ${camera.id}" class="row g-3">
+        <div class="col-md-6">
+            <label for="brand" class="form-label">Бренд:</label>
+            <input th:value="${camera.brand}" type="text" class="form-control" id="brand" name="brand" required>
+        </div>
+
+        <div class="col-md-6">
+            <label for="model" class="form-label">Модель:</label>
+            <input th:value="${camera.model}" type="text" class="form-control" id="model" name="model" required>
+        </div>
+
+        <div class="col-md-6">
+            <label for="matrix" class="form-label">Матриця:</label>
+            <input th:value="${camera.matrix}" type="text" class="form-control" id="matrix" name="matrix" required>
+        </div>
+
+        <div class="col-md-6">
+            <label for="shootingFeatures" class="form-label">Зйомка та функції:</label>
+            <input th:value="${camera.shootingFeatures}" type="number" class="form-control" id="shootingFeatures" name="shootingFeatures" required>
+        </div>
+
+        <div class="col-md-6">
+            <label for="video" class="form-label">Розширення відео:</label>
+            <input th:value="${camera.video}" type="text" class="form-control" id="video" name="video" required>
+        </div>
+
+        <div class="col-md-6">
+            <label for="cameraWeight" class="form-label">Вага:</label>
+            <input th:value="${camera.cameraWeight}" type="number" class="form-control" id="cameraWeight" name="cameraWeight" required>
+        </div>
+
+        <div class="col-md-6">
+            <label for="multiplicityOfIncrease" class="form-label">Кратність збільшення:</label>
+            <input th:value="${camera.multiplicityOfIncrease}" type="text" class="form-control" id="multiplicityOfIncrease" name="multiplicityOfIncrease" required>
+        </div>
+
+        <div class="col-md-6">
+            <label for="displayDiagonal" class="form-label">Діагональ дисплея:</label>
+            <input th:value="${camera.displayDiagonal}" type="text" class="form-control" id="displayDiagonal" name="displayDiagonal" required>
+        </div>
+
+        <div class="col-md-6">
+            <label for="price" class="form-label">Ціна:</label>
+            <input th:value="${camera.price}" type="number" class="form-control" id="price" name="price" required>
+        </div>
+
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary">Обновити</button>
+        </div>
+    </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-xrBzlq8r1jYM7YkCMQ33rltb05e9YxQv5oav0R2qNq911jAkYp16g2q5e26jB7" crossorigin="anonymous"></script>
+</body>
+</html>

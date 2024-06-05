@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="ua" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <style>
+        .custom-card {
+            border: 1px solid #333; /* Custom border (contour) */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .custom-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+
+<div th:replace="~{blocks/header :: header}"></div>
+
+<div class="container mt-2">
+    <div class="row justify-content-center">
+
+        <div th:replace="~{blocks/filter :: filter}"></div>
+
+        <!-- Колонка з товарами -->
+        <div class="col-lg-9 mx-auto">
+            <div class="album py-5 bg-body-tertiary">
+                <div class="container">
+
+                    <button type="button" class="btn btn-primary me-2 mb-2" onclick="window.location.href='/camera-page/page-create-camera'">Додати</button>
+
+                    <!-- Пошук -->
+                    <div class="row justify-content-center mb-3">
+                        <div class="col-md-6">
+                            <form class="d-flex" method="get" action="/camera-page/search-camera">
+                                <input class="form-control me-2" id="search-camera" name="brand" type="search" placeholder="Пошук" aria-label="Пошук">
+                                <button class="btn btn-outline-success" type="submit">Пошук</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-warning text-center" role="alert" th:if="${search_camera.isEmpty()}">
+                        <p>No cameras found</p>
+                    </div>
+
+                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                        <!-- Карточка camera -->
+                        <div class="col-md-4" th:each="el : ${search_camera}">
+                            <a th:href="@{/camera-page/page-camera-id/{id}(id=${el.id})}"
+                               class="text-decoration-none text-reset">
+                                <div class="card custom-card">
+                                    <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
+                                         xmlns="http://www.w3.org/2000/svg" role="img"
+                                         aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice"
+                                         focusable="false"><title>Placeholder</title>
+                                        <rect width="100%" height="100%" fill="#55595c"></rect>
+                                        <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
+                                    </svg>
+                                    <div class="card-body">
+                                        <h3 class="card-text" th:text="${el.brand}"></h3>
+                                        <p class="card-text" th:text="'Модель: ' + ${el.model}"></p>
+                                        <p class="card-text" th:text="'Матриця: ' + ${el.matrix}"></p>
+                                        <p class="card-text" th:text="'Зйомка та функції: ' + ${el.shootingFeatures}"></p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <h5 th:text="'Ціна: ' + ${el.price}"></h5>
+                                            </div>
+                                            <div class="btn-group ml-auto">
+                                                <i class="bi bi-bag-plus "></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <!-- Карточка -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div th:replace="~{blocks/footer :: footer}"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
+
+

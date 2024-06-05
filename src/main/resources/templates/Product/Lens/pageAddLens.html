@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Створення товару</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body>
+<div th:replace="~{blocks/header :: header}"></div>
+
+<div class="container">
+    <h1>Створення нового товару</h1>
+
+    <form method="post" action="/lens-page/page-create-lens" class="row g-3">
+        <div class="col-md-6">
+            <label for="bayonet" class="form-label">Байонет:</label>
+            <select class="form-control" id="bayonet" name="bayonet" required>
+                <option value="" disabled selected>Виберіть байонет</option>
+                <option value="Canon EF-M">Canon EF-M</option>
+                <option value="Canon EF-S">Canon EF-S</option>
+                <option value="Canon EF">Canon EF</option>
+                <option value="Canon RF-S">Canon RF-S</option>
+                <option value="Canon RF">Canon RF</option>
+                <option value="Four Thirds">Four Thirds</option>
+                <option value="Micro 4/3">Micro 4/3</option>
+                <option value="Fujifilm G">Fujifilm G</option>
+                <option value="Fujifilm X">Fujifilm X</option>
+                <option value="Hasselblad H">Hasselblad H</option>
+                <option value="Leica M">Leica M</option>
+                <option value="Leica SL">Leica SL</option>
+                <option value="Leica TL">Leica TL</option>
+                <option value="Nikon 1">Nikon 1</option>
+                <option value="Nikon F">Nikon F</option>
+                <option value="Nikon Z">Nikon Z</option>
+                <option value="Pentax 645">Pentax 645</option>
+                <option value="Pentax K">Pentax K</option>
+                <option value="Pentax Q">Pentax Q</option>
+                <option value="Samsung NX">Samsung NX</option>
+                <option value="Samsung NX-M">Samsung NX-M</option>
+                <option value="Sigma SA">Sigma SA</option>
+                <option value="Sony A">Sony A</option>
+                <option value="Sony E">Sony E</option>
+            </select>
+        </div>
+
+        <div class="col-md-6">
+            <label for="manufacturers" class="form-label">Виробник:</label>
+            <select class="form-control" id="manufacturers" name="manufacturers" required>
+                <option value="" disabled selected>Виберіть виробника</option>
+                <option value="7Artisans">7Artisans</option>
+                <option value="Canon">Canon</option>
+                <option value="Carl Zeiss">Carl Zeiss</option>
+                <option value="Fujifilm">Fujifilm</option>
+                <option value="Laowa">Laowa</option>
+                <option value="Nikon">Nikon</option>
+                <option value="Olympus">Olympus</option>
+                <option value="Panasonic">Panasonic</option>
+                <option value="Samyang">Samyang</option>
+                <option value="Sigma">Sigma</option>
+                <option value="Sony">Sony</option>
+                <option value="Tamron">Tamron</option>
+                <option value="Viltrox">Viltrox</option>
+                <option value="Yongnuo">Yongnuo</option>
+            </select>
+        </div>
+
+        <div class="col-md-6">
+            <label for="focalLength" class="form-label">Фокусна відстань:</label>
+            <select class="form-control" id="focalLength" name="focalLength" required>
+                <option value="" disabled selected>Виберіть фокусну відстань</option>
+                <option value="≤15">≤15</option>
+                <option value="16-25">16-25</option>
+                <option value="36-50">36-50</option>
+                <option value="51-75">51-75</option>
+                <option value="76-100">76-100</option>
+                <option value="101-125">101-125</option>
+                <option value="126-150">126-150</option>
+                <option value=">150">> 150</option>
+                <option value="≤35">≤35</option>
+                <option value="36-50">36-50</option>
+                <option value="51-75">51-75</option>
+                <option value="76-100">76-100</option>
+                <option value="101-150">101-150</option>
+                <option value="151-200">151-200</option>
+                <option value="201-250">201-250</option>
+                <option value="251-300">251-300</option>
+                <option value=">300">> 300</option>
+            </select>
+        </div>
+
+
+        <div class="col-md-6">
+            <label for="lensType" class="form-label">Тип об'єктива:</label>
+            <select class="form-control" id="lensType" name="lensType" required>
+                <option value="" disabled selected>Виберіть тип об'єктива</option>
+                <option value="надширококутний">надширококутний</option>
+                <option value="ширококутний">ширококутний</option>
+                <option value="універсальний">універсальний</option>
+                <option value="телеоб'єктив">телеоб'єктив</option>
+            </select>
+        </div>
+
+
+
+        <div class="col-md-6">
+            <label for="focus" class="form-label">Фокусування:</label>
+            <select class="form-control" id="focus" name="focus" required>
+                <option value="" disabled selected>Виберіть тип фокусування</option>
+                <option value="постійна (фікс)">постійна (фікс)</option>
+                <option value="змінна">змінна</option>
+            </select>
+        </div>
+
+        <div class="col-md-6">
+            <label for="direction" class="form-label">За напрямком:</label>
+            <select class="form-control" id="direction" name="direction" required>
+                <option value="" disabled selected>Виберіть напрямок</option>
+                <option value="пейзажний">пейзажний</option>
+                <option value="портретний">портретний</option>
+                <option value="архітектурний">архітектурний</option>
+                <option value="багатофункціональний">багатофункціональний</option>
+                <option value="кінооб'єктив">кінооб'єктив</option>
+                <option value="макрооб'єктив">макрооб'єктив</option>
+            </select>
+        </div>
+
+
+        <div class="col-md-6">
+            <label for="matrixFormat" class="form-label">Формат матриці:</label>
+            <select class="form-control" id="matrixFormat" name="matrixFormat" required>
+                <option value="" disabled selected>Виберіть формат матриці</option>
+                <option value="big frame">big frame</option>
+                <option value="full frame">full frame</option>
+                <option value="APS-C">APS-C</option>
+                <option value="4/3">4/3</option>
+            </select>
+        </div>
+
+
+        <div class="col-md-6">
+            <label for="weight" class="form-label">Вага:</label>
+            <select class="form-control" id="weight" name="weight" required>
+                <option value="" disabled selected>Виберіть вагу</option>
+                <option value="≤ 200 г">≤ 200 г</option>
+                <option value="201 - 400 г">201 - 400 г</option>
+                <option value="401 - 600 г">401 - 600 г</option>
+                <option value="601 - 800 г">601 - 800 г</option>
+                <option value="801 - 1000 г">801 - 1000 г</option>
+                <option value="> 1000 г">> 1000 г</option>
+            </select>
+        </div>
+
+
+        <div class="col-md-6">
+            <label for="price" class="form-label">Ціна:</label>
+            <input type="number" class="form-control" id="price" name="price" required>
+        </div>
+
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary">Створити</button>
+        </div>
+    </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-xrBzlq8r1jYM7YkCMQ33rltb05e9YxQv5oav0R2qNq911jAkYp16g2q5e26jB7" crossorigin="anonymous"></script>
+</body>
+</html>

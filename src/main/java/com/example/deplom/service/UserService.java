@@ -1,9 +1,16 @@
 package com.example.deplom.service;
 
 import com.example.deplom.DTOS.UserDTO;
-import com.example.deplom.models.User;
+import org.springframework.data.domain.PageRequest;
+
+import java.util.List;
 
 public interface UserService {
-    public void createUser(UserDTO userDTO);
-    void update (UserDTO userDTO);
+    void createUser(UserDTO userDTO);
+    UserDTO findUserById(Long id);
+    void deleteUserById(Long Id);
+    void updateUser(Long Id, UserDTO userDTO);
+    List<UserDTO> getAllUser(PageRequest pageRequest);
+
+
 }

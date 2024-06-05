@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Створення товару</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body>
+<div th:replace="~{blocks/header :: header}"></div>
+
+<div class="container">
+  <h1>Створення нового товару</h1>
+
+  <form method="post" action="/tripod-page/page-create-tripod" class="row g-3">
+    <div class="col-md-6">
+      <label for="type" class="form-label">Тип:</label>
+      <input type="text" class="form-control" id="type" name="type" required>
+    </div>
+
+    <div class="col-md-6">
+      <label for="head" class="form-label">Головка:</label>
+      <input type="text" class="form-control" id="head" name="head" required>
+    </div>
+
+    <div class="col-md-6">
+      <label for="dimensions" class="form-label">Розміри (від ? до ?):</label>
+      <input type="text" class="form-control" id="dimensions" name="dimensions" required>
+    </div>
+
+    <div class="col-md-6">
+      <label for="material" class="form-label">Матеріал:</label>
+      <input type="text" class="form-control" id="material" name="material" required>
+    </div>
+
+    <div class="col-md-6">
+      <label for="legSection" class="form-label">Секції ніжок:</label>
+      <input type="text" class="form-control" id="legSection" name="legSection" required>
+    </div>
+
+    <div class="col-md-6">
+      <label for="headType" class="form-label">Тип головки:</label>
+      <input type="text" class="form-control" id="headType" name="headType" required>
+    </div>
+
+    <div class="col-md-6">
+      <label for="price" class="form-label">Ціна:</label>
+      <input type="number" class="form-control" id="price" name="price" required>
+    </div>
+
+    <div class="col-12">
+      <button type="submit" class="btn btn-primary">Створити</button>
+    </div>
+  </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-xrBzlq8r1jYM7YkCMQ33rltb05e9YxQv5oav0R2qNq911jAkYp16g2q5e26jB7" crossorigin="anonymous"></script>
+</body>
+</html>

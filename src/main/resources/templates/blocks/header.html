@@ -1,0 +1,43 @@
+<div th:fragment="header" class="mb-3">
+  <header class="p-3 text-bg-dark">
+    <div class="container">
+      <div class="d-flex flex-wrap align-items-center justify-content-between">
+        <ul class="nav col-12 col-lg-auto mb-2 mb-lg-0">
+          <li><a href="/main" class="nav-link px-2 text-secondary">Home</a></li>
+          <li><a type="submit" href="/admin" id="adminButton" class="nav-link px-2 text-white">admin</a></li>
+          <li><a href="/user" class="nav-link px-2 text-white">user</a></li>
+          <li><a href="/user" class="nav-link px-2 text-white"></a></li>
+<!--          <li><a href="" class="nav-link px-2 text-white">FAQs</a></li>-->
+<!--          <li><a href="" class="nav-link px-2 text-white">About</a></li>-->
+        </ul>
+
+        <div class="text-end d-flex justify-content-end align-items-center">
+          <a href="/cart" class="nav-link px-2 text-white"><i class="bi bi-cart"></i></a>
+          <a href="/profile" class="nav-link px-2 text-white"><i class="bi bi-person-circle"></i></a>
+          <a href="/loginPage" class="btn btn-outline-light me-2" role="button">Login</a>
+          <a href="/registerPage" class="btn btn-warning" role="button">Sign-up</a>
+        </div>
+
+      </div>
+    </div>
+  </header>
+</div>
+<script>
+  document.getElementById("adminButton").addEventListener("click", function(event){
+    event.preventDefault(); // Зупиняємо переадресацію, щоб не перейти на нову сторінку
+    var token = localStorage.getItem("token"); // Отримуємо токен з локального сховища
+    // Ваш код для передачі токену на сторінку, наприклад, встановлення заголовка Authorization
+    // або передача токену як параметру запиту
+    // Приклад:
+    fetch('/admin', {
+        method: 'GET',
+        headers: {
+            'Authorization': 'Bearer ' + token
+        }
+    }).then(response => {
+        // Обробка відповіді з сервера
+    });
+  });
+
+</script>
+

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In</title>
+<!--    <script>-->
+<!--        async function login(event) {-->
+<!--            event.preventDefault();-->
+
+<!--            const username = document.getElementById('username').value;-->
+<!--            const password = document.getElementById('password').value;-->
+
+<!--            const response = await fetch('/loginPage', {-->
+<!--                method: 'POST',-->
+<!--                headers: {-->
+<!--                    'Content-Type': 'application/x-www-form-urlencoded',-->
+<!--                },-->
+<!--                body: new URLSearchParams({-->
+<!--                    'username': username,-->
+<!--                    'password': password-->
+<!--                })-->
+<!--            });-->
+
+<!--            if (response.ok) {-->
+<!--                const data = await response.json();-->
+<!--                localStorage.setItem('token', data.token);-->
+<!--                window.location.href = '/main';-->
+<!--            } else {-->
+<!--                // Обробка помилок-->
+<!--                console.error('Login failed');-->
+<!--            }-->
+<!--        }-->
+
+<!--        async function apiRequest(endpoint, method = 'GET', body = null) {-->
+<!--            const token = localStorage.getItem('token');-->
+<!--            const headers = {-->
+<!--                'Content-Type': 'application/json',-->
+<!--                'Authorization': `Bearer ${token}`-->
+<!--            };-->
+
+<!--            const options = {-->
+<!--                method: method,-->
+<!--                headers: headers-->
+<!--            };-->
+
+<!--            if (body) {-->
+<!--                options.body = JSON.stringify(body);-->
+<!--            }-->
+
+<!--            const response = await fetch(endpoint, options);-->
+
+<!--            if (!response.ok) {-->
+<!--                throw new Error('Network response was not ok');-->
+<!--            }-->
+
+<!--            return await response.json();-->
+<!--        }-->
+
+<!--        // Використання apiRequest для отримання даних-->
+<!--        document.addEventListener('DOMContentLoaded', () => {-->
+<!--            apiRequest('/api/some-endpoint')-->
+<!--                .then(data => {-->
+<!--                    console.log('Data:', data);-->
+<!--                })-->
+<!--                .catch(error => {-->
+<!--                    console.error('Error:', error);-->
+<!--                });-->
+<!--        });-->
+<!--    </script>-->
+    <script>
+        async function loginRequest(username, password) {
+            const response = await fetch('/loginPage', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({
+                    'username': username,
+                    'password': password
+                })
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                localStorage.setItem('token', data.token);
+                window.location.href = '/main';
+            } else {
+                // Обробка помилок
+                console.error('Login failed');
+            }
+        }
+
+        async function login(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            await loginRequest(username, password);
+        }
+
+        async function apiRequest(endpoint, method = 'GET', body = null) {
+            const token = localStorage.getItem('token');
+            const headers = {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            };
+
+            const options = {
+                method: method,
+                headers: headers
+            };
+
+            if (body) {
+                options.body = JSON.stringify(body);
+            }
+
+            const response = await fetch(endpoint, options);
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            return await response.json();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const token = localStorage.getItem('token');
+            if (token) {
+                apiRequest('/api/some-endpoint')
+                    .then(data => {
+                        console.log('Data:', data);
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            }
+        });
+    </script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<!--<body class="d-flex justify-content-center align-items-center vh-100">-->
+<!--<main class="form-signin w-25">-->
+<!--    <form method="post" action="/loginPage" onsubmit="login(event)">-->
+<!--        <h1 class="h3 mb-3 fw-normal text-center">Вхід</h1>-->
+<!--        <div class="form-floating mb-3">-->
+<!--            <input name="username" type="text" class="form-control" id="floatingName" placeholder="Ваше ім'я">-->
+<!--            <label for="floatingName">Ім'я</label>-->
+<!--        </div>-->
+<!--        <div class="form-floating mb-3">-->
+<!--            <input name="password" type="password" class="form-control" id="floatingPassword" placeholder="Password">-->
+<!--            <label for="floatingPassword">Пароль</label>-->
+<!--        </div>-->
+
+<!--        <button class="btn btn-primary w-100 py-2" type="submit">Вхід</button>-->
+
+<!--        &lt;!&ndash; Додана кнопка "Зареєструватися" &ndash;&gt;-->
+<!--        <a href="/registerPage" class="btn btn-secondary w-100 mt-2" role="button">Зареєструватися</a>-->
+<!--    </form>-->
+
+<!--</main>-->
+<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>-->
+<!--</body>-->
+
+<body class="d-flex justify-content-center align-items-center vh-100">
+<main class="form-signin w-25">
+    <form method="post" action="/loginPage" onsubmit="login(event)">
+        <h1 class="h3 mb-3 fw-normal text-center">Вхід</h1>
+        <div class="form-floating mb-3">
+            <input name="username" type="text" class="form-control" id="username" placeholder="Ваше ім'я">
+            <label for="username">Ім'я</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input name="password" type="password" class="form-control" id="password" placeholder="Пароль">
+            <label for="password">Пароль</label>
+        </div>
+
+        <button class="btn btn-primary w-100 py-2" type="submit">Вхід</button>
+
+        <!-- Додана кнопка "Зареєструватися" -->
+        <a href="/registerPage" class="btn btn-secondary w-100 mt-2" role="button">Зареєструватися</a>
+    </form>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+</body>
+</html>
+
+

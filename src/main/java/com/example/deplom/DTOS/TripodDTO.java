@@ -4,9 +4,12 @@ import lombok.Data;
 
 @Data
 public class TripodDTO {
-    private Long id;
-    private String type;
-    private String head;
-    private String dimensions;
-    private String material;
+    private String type; // Тип
+    private String head; // Головка
+    private String dimensions; // Розміри (від ? до ?)
+    private String material; // Матеріал
+    private String legSection; // Секції ніжок
+    private String headType; // Тип головки
+    private double price; // Ціна
+
 }

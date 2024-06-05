@@ -1,8 +1,6 @@
 package com.example.deplom.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,14 +14,15 @@ import lombok.Setter;
 @Table(name = "lens")
 public class Lens {
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private String bayonet; // Байонет
-    private int focalLength; // Фокусна відстань
-    private String system; // Система
+    private String  focalLength; // Фокусна відстань
+    private String lensType; // Тип Обєктива
     private String focus; // Фокусування
-    private String aperture; // Діафрагма
-    private String viewingAngle; // Кут огляду
-    private String matrixSize; // Розмір матриці
-    private int weight; // Вага
+    private String manufacturers; // Виробники
+    private String direction; // Напрямок
+    private String matrixFormat; // Формат матриці
+    private String weight; // Вага
     private double price; // Ціна
 }
