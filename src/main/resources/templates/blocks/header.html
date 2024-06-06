@@ -5,81 +5,101 @@
             <div class="d-flex flex-wrap align-items-center justify-content-between">
                 <ul class="nav col-12 col-lg-auto mb-2 mb-lg-0">
                     <li><a href="/main" class="nav-link px-2 text-secondary">Home</a></li>
-                    <li><a type="submit" href="/admin" id="adminButton" class="nav-link px-2 text-white">admin</a></li>
                     <li><a href="/user" class="nav-link px-2 text-white">user</a></li>
                     <li><a href="/user" class="nav-link px-2 text-white"></a></li>
                 </ul>
                 <div class="text-end d-flex justify-content-end align-items-center">
                     <a href="/cart" class="nav-link px-2 text-white"><i class="bi bi-cart"></i></a>
                     <a href="/profile" class="nav-link px-2 text-white"><i class="bi bi-person-circle"></i></a>
-                    <a href="/loginPage" class="btn btn-outline-light me-2" role="button">Login</a>
-                    <a href="/registerPage" class="btn btn-warning" role="button">Sign-up</a>
+                    <a href="/admin" id="adminButton" class="nav-link px-2 text-white"><i class="bi bi-person-square"></i></a>
+                    <a href="/loginPage" id="loginButton" class="btn btn-outline-light me-2" role="button">Login</a>
+                    <a href="/registerPage" id="signUpButton" class="btn btn-warning" role="button">Sign-up</a>
+                    <a href="" id="logoutButton" class="btn btn-outline-light me-2" role="button">Logout</a>
                 </div>
 
             </div>
         </div>
     </header>
     <script>
-        // document.getElementById("adminButton").addEventListener("click", function(event){
-        //   event.preventDefault(); // Зупиняємо переадресацію, щоб не перейти на нову сторінку
-        //   var token = localStorage.getItem("token"); // Отримуємо токен з локального сховища
-        //   // Перевірка, чи токен існує
-        //   if (token) {
-        //     // Встановлення токену у заголовку запиту
-        //     var requestOptions = {
-        //       method: 'GET',
-        //       headers: {
-        //         'Authorization': 'Bearer ' + token
-        //       },
-        //       redirect: 'follow'
-        //     };
-        //
-        //     // Виконання запиту на сторінку "/admin"
-        //     fetch("/admin", requestOptions)
-        //             .then(response => response.text())
-        //             .then(result => console.log(result)) // Результат запиту
-        //             .catch(error => console.log('error', error));
-        //   } else {
-        //     console.log("Токен не знайдено.");
-        //   }
-        // });
+        document.getElementById("adminButton").addEventListener("click", function (event) {
+            event.preventDefault(); // Зупиняємо переадресацію, щоб не перейти на нову сторінку
+            var token = localStorage.getItem("token"); // Отримуємо токен з локального сховища
+            // Перевірка, чи токен існує
+            if (token) {
+                // Встановлення токену у заголовку запиту
+                var requestOptions = {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': 'Bearer ' + token
+                    },
+                    redirect: 'follow'
+                };
 
-        document.getElementById("adminButton").addEventListener("click", function(event){
-          event.preventDefault(); // Зупиняємо переадресацію, щоб не перейти на нову сторінку
-          var token = localStorage.getItem("token"); // Отримуємо токен з локального сховища
-          // Перевірка, чи токен існує
-          if (token) {
-            // Встановлення токену у заголовку запиту
-            var requestOptions = {
-              method: 'GET',
-              headers: {
-                'Authorization': 'Bearer ' + token
-              },
-              redirect: 'follow'
-            };
-
-            // Виконання запиту на сторінку "/admin"
-            fetch("/admin", requestOptions)
+                // Виконання запиту на сторінку "/admin"
+                fetch("/admin", requestOptions)
                     .then(response => {
-                      if (response.ok) {
-                        // Якщо відповідь успішна, відобразити отриманий HTML
-                        return response.text();
-                      } else {
-                        console.log('Error:', response.statusText);
-                        return Promise.reject(response);
-                      }
+                        if (response.ok) {
+                            // Якщо відповідь успішна, відобразити отриманий HTML
+                            return response.text();
+                        } else {
+                            console.log('Error:', response.statusText);
+                            return Promise.reject(response);
+                        }
                     })
                     .then(html => {
-                      document.open();
-                      document.write(html);
-                      document.close();
+                        document.open();
+                        document.write(html);
+                        document.close();
                     })
                     .catch(error => console.log('error', error));
-          } else {
-            console.log("Токен не знайдено.");
-          }
+            } else {
+                console.log("Токен не знайдено.");
+            }
         });
 
-    </script>
+        //Ховаєм кнопки
+        document.addEventListener("DOMContentLoaded", function () {
+            let token = localStorage.getItem("token");
+            let logoutButton = document.getElementById("logoutButton");
 
+            // Перевірка, чи токен існує
+            if (token) {
+                // Знаходимо кнопки "Login" і "Sign-up" за їх ID
+                let loginButton = document.getElementById("loginButton");
+                let signUpButton = document.getElementById("signUpButton");
+
+                // Перевіряємо, чи знайдені кнопки, і якщо так, ховаємо їх
+                if (loginButton) {
+                    loginButton.style.display = "none";
+                }
+                if (signUpButton) {
+                    signUpButton.style.display = "none";
+                }
+
+                // Показуємо кнопку "Вийти"
+                if (logoutButton) {
+                    logoutButton.style.display = "block";
+                }
+            } else {
+                // Якщо токен відсутній, ховаємо кнопку "Вийти"
+                if (logoutButton) {
+                    logoutButton.style.display = "none";
+                }
+            }
+
+            // Додаємо обробник подій для кнопки "Вийти"
+            if (logoutButton) {
+                logoutButton.addEventListener("click", function (event) {
+                    event.preventDefault(); // Зупиняємо дії за замовчуванням
+
+                    // Видаляємо токен з локального сховища
+                    localStorage.removeItem("token");
+                    localStorage.removeItem("role");
+
+                    // Перенаправляємо користувача на сторінку логіну або будь-яку іншу сторінку за вашим вибором
+                    window.location.href = "/main"; // Замініть "/loginPage" на URL-адресу, на яку ви хочете перенаправити користувача
+                });
+            }
+        });
+    </script>
 </div>

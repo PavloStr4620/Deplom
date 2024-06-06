@@ -1,6 +1,7 @@
 package com.example.deplom.service.serviceImpl;
 import com.example.deplom.models.AuthenticationResponse;
 import com.example.deplom.models.User;
+import com.example.deplom.models.enums.Role;
 import com.example.deplom.repository.UserRepository;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -31,7 +32,7 @@ public class AuthenticationService {
         String token = jwtService.generateToken(user);
         return new AuthenticationResponse(token);
     }
-    public AuthenticationResponse authenticate(User request){
+    public AuthenticationResponse authenticate(User request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getUsername(),
@@ -40,6 +41,8 @@ public class AuthenticationService {
         );
         User user = repository.findByUsername(request.getUsername()).orElseThrow();
         String token = jwtService.generateToken(user);
-        return new AuthenticationResponse(token);
+        String role = String.valueOf(user.getRole()); // Припустимо, що User має метод getRole()
+        return new AuthenticationResponse(token, role);
     }
+
 }

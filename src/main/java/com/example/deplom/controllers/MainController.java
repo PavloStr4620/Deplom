@@ -60,7 +60,7 @@ public class MainController {
     }
 
     @PostMapping("/registerPage")
-    public String registerUser(@RequestParam String username, @RequestParam String email, @RequestParam String password, HttpServletResponse response) {
+    public String registerUser(@RequestParam String username, @RequestParam String email, @RequestParam String password) {
         // Створення об'єкта користувача
         User user = new User();
         user.setUsername(username);
@@ -71,18 +71,7 @@ public class MainController {
         // Збереження користувача в базі даних
         userRepository.save(user);
 
-        // Генерація токена
-        String token = jwtService.generateToken(user);
-
-        // Створення cookie з токеном
-        Cookie cookie = new Cookie("token", token);
-        cookie.setMaxAge(7 * 24 * 60 * 60); // Встановлення терміну дії cookie (наприклад, 7 днів)
-        cookie.setPath("/"); // Встановлення шляху, на якому буде доступний cookie (можна вказати специфічний шлях на вашому сервері)
-
-        // Додавання cookie до відповіді
-        response.addCookie(cookie);
-
-        return "redirect:/main";
+        return "redirect:/loginPage";
     }
 
     @GetMapping("/test")
@@ -92,35 +81,17 @@ public class MainController {
     }
 
 //    @PostMapping("/loginPage")
-//    public String login(@RequestParam String username, @RequestParam String password){
-//        User request = new User();
-//        request.setUsername(username);
-//        request.setPassword(password);
-//        authService.authenticate(request);
-//        return "redirect:/main";
-//    }
-
-//    @PostMapping("/loginPage")
-//    public String login(@RequestParam String username, @RequestParam String password){
+//    public ResponseEntity<Map<String, String>> login(@RequestParam String username, @RequestParam String password) {
 //        User request = new User();
 //        request.setUsername(username);
 //        request.setPassword(password);
 //        AuthenticationResponse response = authService.authenticate(request);
-//        return "redirect:/main?token=" + response.getToken();
-
+//
+//        Map<String, String> responseBody = new HashMap<>();
+//        responseBody.put("token", response.getToken());
+//
+//        return ResponseEntity.ok(responseBody);
 //    }
-
-
-//@PostMapping("/loginPage")
-//public String login(@RequestParam String username, @RequestParam String password, Model model){
-//    User request = new User();
-//    request.setUsername(username);
-//    request.setPassword(password);
-//    AuthenticationResponse response = authService.authenticate(request);
-//    model.addAttribute("token", response.getToken());
-//    return "redirect:/main";
-//}
-
 
     @PostMapping("/loginPage")
     public ResponseEntity<Map<String, String>> login(@RequestParam String username, @RequestParam String password) {
@@ -131,7 +102,10 @@ public class MainController {
 
         Map<String, String> responseBody = new HashMap<>();
         responseBody.put("token", response.getToken());
+        responseBody.put("role", response.getRole()); // Include the role in the response
 
         return ResponseEntity.ok(responseBody);
     }
+
+
 }
