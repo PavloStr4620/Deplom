@@ -1,81 +1,85 @@
 <div th:fragment="header" class="mb-3">
 
-  <header class="p-3 text-bg-dark">
-    <div class="container">
-      <div class="d-flex flex-wrap align-items-center justify-content-between">
-        <ul class="nav col-12 col-lg-auto mb-2 mb-lg-0">
-          <li><a href="/main" class="nav-link px-2 text-secondary">Home</a></li>
-          <li><a type="submit" href="/admin" id="adminButton" class="nav-link px-2 text-white">admin</a></li>
-          <li><a href="/user" class="nav-link px-2 text-white">user</a></li>
-          <li><a href="/user" class="nav-link px-2 text-white"></a></li>
-        </ul>
-        <div class="text-end d-flex justify-content-end align-items-center">
-          <a href="/cart" class="nav-link px-2 text-white"><i class="bi bi-cart"></i></a>
-          <a href="/profile" class="nav-link px-2 text-white"><i class="bi bi-person-circle"></i></a>
-          <a href="/loginPage" class="btn btn-outline-light me-2" role="button">Login</a>
-          <a href="/registerPage" class="btn btn-warning" role="button">Sign-up</a>
+    <header class="p-3 text-bg-dark">
+        <div class="container">
+            <div class="d-flex flex-wrap align-items-center justify-content-between">
+                <ul class="nav col-12 col-lg-auto mb-2 mb-lg-0">
+                    <li><a href="/main" class="nav-link px-2 text-secondary">Home</a></li>
+                    <li><a type="submit" href="/admin" id="adminButton" class="nav-link px-2 text-white">admin</a></li>
+                    <li><a href="/user" class="nav-link px-2 text-white">user</a></li>
+                    <li><a href="/user" class="nav-link px-2 text-white"></a></li>
+                </ul>
+                <div class="text-end d-flex justify-content-end align-items-center">
+                    <a href="/cart" class="nav-link px-2 text-white"><i class="bi bi-cart"></i></a>
+                    <a href="/profile" class="nav-link px-2 text-white"><i class="bi bi-person-circle"></i></a>
+                    <a href="/loginPage" class="btn btn-outline-light me-2" role="button">Login</a>
+                    <a href="/registerPage" class="btn btn-warning" role="button">Sign-up</a>
+                </div>
+
+            </div>
         </div>
+    </header>
+    <script>
+        // document.getElementById("adminButton").addEventListener("click", function(event){
+        //   event.preventDefault(); // Зупиняємо переадресацію, щоб не перейти на нову сторінку
+        //   var token = localStorage.getItem("token"); // Отримуємо токен з локального сховища
+        //   // Перевірка, чи токен існує
+        //   if (token) {
+        //     // Встановлення токену у заголовку запиту
+        //     var requestOptions = {
+        //       method: 'GET',
+        //       headers: {
+        //         'Authorization': 'Bearer ' + token
+        //       },
+        //       redirect: 'follow'
+        //     };
+        //
+        //     // Виконання запиту на сторінку "/admin"
+        //     fetch("/admin", requestOptions)
+        //             .then(response => response.text())
+        //             .then(result => console.log(result)) // Результат запиту
+        //             .catch(error => console.log('error', error));
+        //   } else {
+        //     console.log("Токен не знайдено.");
+        //   }
+        // });
 
-      </div>
-    </div>
-  </header>
-  <script>
+        document.getElementById("adminButton").addEventListener("click", function(event){
+          event.preventDefault(); // Зупиняємо переадресацію, щоб не перейти на нову сторінку
+          var token = localStorage.getItem("token"); // Отримуємо токен з локального сховища
+          // Перевірка, чи токен існує
+          if (token) {
+            // Встановлення токену у заголовку запиту
+            var requestOptions = {
+              method: 'GET',
+              headers: {
+                'Authorization': 'Bearer ' + token
+              },
+              redirect: 'follow'
+            };
 
-    document.getElementById("adminButton").addEventListener("click", function(event){
-      event.preventDefault(); // Зупиняємо переадресацію, щоб не перейти на нову сторінку
-      var token = localStorage.getItem("token"); // Отримуємо токен з локального сховища
-      // Перевірка, чи токен існує
-      if (token) {
-        // Встановлення токену у заголовку запиту
-        var requestOptions = {
-          method: 'GET',
-          headers: {
-            'Authorization': 'Bearer ' + token
-          },
-          redirect: 'follow'
-        };
+            // Виконання запиту на сторінку "/admin"
+            fetch("/admin", requestOptions)
+                    .then(response => {
+                      if (response.ok) {
+                        // Якщо відповідь успішна, відобразити отриманий HTML
+                        return response.text();
+                      } else {
+                        console.log('Error:', response.statusText);
+                        return Promise.reject(response);
+                      }
+                    })
+                    .then(html => {
+                      document.open();
+                      document.write(html);
+                      document.close();
+                    })
+                    .catch(error => console.log('error', error));
+          } else {
+            console.log("Токен не знайдено.");
+          }
+        });
 
-        // Виконання запиту на сторінку "/admin"
-        fetch("/admin", requestOptions)
-                .then(response => response.text())
-                .then(result => console.log(result)) // Результат запиту
-                .catch(error => console.log('error', error));
-      } else {
-        console.log("Токен не знайдено.");
-      }
-    });
+    </script>
 
-    // document.getElementById("adminButton").addEventListener("click", function(event){
-    //   event.preventDefault(); // Зупиняємо переадресацію, щоб не перейти на нову сторінку
-    //   let token = localStorage.getItem("token"); // Отримуємо токен з локального сховища
-    //   // Перевірка, чи токен існує
-    //   if (token) {
-    //     // Встановлення токену у заголовку запиту
-    //     let requestOptions = {
-    //       method: 'GET',
-    //       headers: {
-    //         'Authorization': 'Bearer ' + token
-    //       },
-    //       redirect: 'follow'
-    //     };
-    //
-    //     // Виконання запиту на сторінку "/admin"
-    //     fetch("/admin", requestOptions)
-    //             .then(response => {
-    //               // Перевірка статусу відповіді
-    //               if (response.ok) {
-    //                 // Якщо статус відповіді 200 (OK), переходимо на сторінку "/admin"
-    //                 window.location.href = "/admin";
-    //               } else {
-    //                 // Інакше виводимо помилку в консоль
-    //                 console.log('Failed to fetch page');
-    //               }
-    //             })
-    //             .catch(error => console.log('error', error));
-    //   } else {
-    //     console.log("Токен не знайдено.");
-    //   }
-    // });
-
-  </script>
 </div>
