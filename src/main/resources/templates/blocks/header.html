@@ -1,33 +1,33 @@
 <div th:fragment="header" class="mb-3">
-
     <header class="p-3 text-bg-dark">
         <div class="container">
             <div class="d-flex flex-wrap align-items-center justify-content-between">
                 <ul class="nav col-12 col-lg-auto mb-2 mb-lg-0">
                     <li><a href="/main" class="nav-link px-2 text-secondary">Home</a></li>
-                    <li><a href="/user" class="nav-link px-2 text-white">user</a></li>
-                    <li><a href="/user" class="nav-link px-2 text-white"></a></li>
+                    <li><a href="/camera-page" class="nav-link px-2 text-white">Camera</a></li>
+                    <li><a href="/lens-page" class="nav-link px-2 text-white">Lens</a></li>
+                    <li><a href="/tripod-page" class="nav-link px-2 text-white">Tripod</a></li>
                 </ul>
                 <div class="text-end d-flex justify-content-end align-items-center">
-                    <a href="/cart" class="nav-link px-2 text-white"><i class="bi bi-cart"></i></a>
-                    <a href="/profile" class="nav-link px-2 text-white"><i class="bi bi-person-circle"></i></a>
-                    <a href="/admin" id="adminButton" class="nav-link px-2 text-white"><i class="bi bi-person-square"></i></a>
-                    <a href="/loginPage" id="loginButton" class="btn btn-outline-light me-2" role="button">Login</a>
+                    <a href="/cart" id="cartButton" class="nav-link px-2 text-white" style="display:none;"><i class="bi bi-cart"></i></a>
+                    <a href="/profile" id="profileButton" class="nav-link px-2 text-white" style="display:none;"><i class="bi bi-person-circle"></i></a>
+                    <a href="/admin" id="adminButton" class="nav-link px-2 text-white" style="display:none;"><i class="bi bi-person-square"></i></a>
+                    <a href="/loginPage" id="loginButton" class="btn btn-outline-light me-2" role="button" style="display:none;">Login</a>
                     <a href="/registerPage" id="signUpButton" class="btn btn-warning" role="button">Sign-up</a>
-                    <a href="" id="logoutButton" class="btn btn-outline-light me-2" role="button">Logout</a>
+                    <a href="" id="logoutButton" class="btn btn-outline-light me-2" role="button" style="display:none;">Logout</a>
                 </div>
-
             </div>
         </div>
+
     </header>
     <script>
         document.getElementById("adminButton").addEventListener("click", function (event) {
-            event.preventDefault(); // Зупиняємо переадресацію, щоб не перейти на нову сторінку
-            var token = localStorage.getItem("token"); // Отримуємо токен з локального сховища
-            // Перевірка, чи токен існує
+            event.preventDefault(); // Prevent redirection to avoid navigating away
+            let token = localStorage.getItem("token"); // Get the token from local storage
+            // Check if the token exists
             if (token) {
-                // Встановлення токену у заголовку запиту
-                var requestOptions = {
+                // Set the token in the request header
+                let requestOptions = {
                     method: 'GET',
                     headers: {
                         'Authorization': 'Bearer ' + token
@@ -35,11 +35,11 @@
                     redirect: 'follow'
                 };
 
-                // Виконання запиту на сторінку "/admin"
+                // Execute the request to the "/admin" page
                 fetch("/admin", requestOptions)
                     .then(response => {
                         if (response.ok) {
-                            // Якщо відповідь успішна, відобразити отриманий HTML
+                            // If the response is successful, display the received HTML
                             return response.text();
                         } else {
                             console.log('Error:', response.statusText);
@@ -53,22 +53,24 @@
                     })
                     .catch(error => console.log('error', error));
             } else {
-                console.log("Токен не знайдено.");
+                console.log("Token not found.");
             }
         });
 
-        //Ховаєм кнопки
+        // Hide or show buttons based on role
         document.addEventListener("DOMContentLoaded", function () {
             let token = localStorage.getItem("token");
+            let role = localStorage.getItem("role");
             let logoutButton = document.getElementById("logoutButton");
+            let adminButton = document.getElementById("adminButton");
+            let profileButton = document.getElementById("profileButton");
+            let cartButton = document.getElementById("cartButton");
+            let loginButton = document.getElementById("loginButton");
+            let signUpButton = document.getElementById("signUpButton");
 
-            // Перевірка, чи токен існує
+            // Check if the token exists
             if (token) {
-                // Знаходимо кнопки "Login" і "Sign-up" за їх ID
-                let loginButton = document.getElementById("loginButton");
-                let signUpButton = document.getElementById("signUpButton");
-
-                // Перевіряємо, чи знайдені кнопки, і якщо так, ховаємо їх
+                // Hide the "Login" and "Sign-up" buttons if they exist
                 if (loginButton) {
                     loginButton.style.display = "none";
                 }
@@ -76,28 +78,55 @@
                     signUpButton.style.display = "none";
                 }
 
-                // Показуємо кнопку "Вийти"
+                // Show the "Logout" button if it exists
                 if (logoutButton) {
                     logoutButton.style.display = "block";
                 }
+
+                // Show the cart button
+                if (cartButton) {
+                    cartButton.style.display = "block";
+                }
+
+                // Show/hide admin and profile buttons based on role
+                if (role === "ADMIN") {
+                    if (adminButton) {
+                        adminButton.style.display = "block";
+                    }
+                    if (profileButton) {
+                        profileButton.style.display = "none";
+                    }
+                } else if (role === "USER") {
+                    if (adminButton) {
+                        adminButton.style.display = "none";
+                    }
+                    if (profileButton) {
+                        profileButton.style.display = "block";
+                    }
+                }
             } else {
-                // Якщо токен відсутній, ховаємо кнопку "Вийти"
+                // If the token is missing, hide the "Logout" button
                 if (logoutButton) {
                     logoutButton.style.display = "none";
                 }
+
+                // Show the "Login" button if the token is missing
+                if (loginButton) {
+                    loginButton.style.display = "block";
+                }
             }
 
-            // Додаємо обробник подій для кнопки "Вийти"
+            // Add event handler for the "Logout" button
             if (logoutButton) {
                 logoutButton.addEventListener("click", function (event) {
-                    event.preventDefault(); // Зупиняємо дії за замовчуванням
+                    event.preventDefault(); // Prevent default actions
 
-                    // Видаляємо токен з локального сховища
+                    // Remove the token and role from local storage
                     localStorage.removeItem("token");
                     localStorage.removeItem("role");
 
-                    // Перенаправляємо користувача на сторінку логіну або будь-яку іншу сторінку за вашим вибором
-                    window.location.href = "/main"; // Замініть "/loginPage" на URL-адресу, на яку ви хочете перенаправити користувача
+                    // Redirect the user to the main page
+                    window.location.href = "/main"; // Replace "/loginPage" with the URL you want to redirect the user to
                 });
             }
         });

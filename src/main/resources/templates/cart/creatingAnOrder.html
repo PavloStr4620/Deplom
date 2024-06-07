@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Форма замовлення</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body>
+
+<div th:replace="~{blocks/header :: header}"></div>
+
+<div class="container mt-5">
+    <h2 class="mb-4">Форма замовлення та оплати</h2>
+    <form>
+        <!-- Інформація про клієнта -->
+        <div class="mb-3">
+            <h4>Інформація про клієнта</h4>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="fullName" placeholder="Повне ім'я">
+                <label for="fullName">Повне ім'я</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="email" class="form-control" id="email" placeholder="адреса@example.com">
+                <label for="email">Електронна адреса</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="tel" class="form-control" id="phone" placeholder="Номер телефону">
+                <label for="phone">Номер телефону</label>
+            </div>
+        </div>
+
+        <!-- Інформація про доставку -->
+        <div class="mb-3">
+            <h4>Інформація про доставку</h4>
+            <div class="form-floating mb-3">
+                <label for="region"></label>
+                <select id="region" class="form-select" onchange="updateCities()">
+                    <option value="" disabled selected>Оберіть область</option>
+                    <option value="Вінницька область">Вінницька область</option>
+                    <option value="Волинська область">Волинська область</option>
+                    <option value="Дніпропетровська область">Дніпропетровська область</option>
+                    <option value="Донецька область">Донецька область</option>
+                    <option value="Житомирська область">Житомирська область</option>
+                    <option value="Закарпатська область">Закарпатська область</option>
+                    <option value="Запорізька область">Запорізька область</option>
+                    <option value="Івано-Франківська область">Івано-Франківська область</option>
+                    <option value="Київська область">Київська область</option>
+                    <option value="Кіровоградська область">Кіровоградська область</option>
+                    <option value="Луганська область">Луганська область</option>
+                    <option value="Львівська область">Львівська область</option>
+                    <option value="Миколаївська область">Миколаївська область</option>
+                    <option value="Одеська область">Одеська область</option>
+                    <option value="Полтавська область">Полтавська область</option>
+                    <option value="Рівненська область">Рівненська область</option>
+                    <option value="Сумська область">Сумська область</option>
+                    <option value="Тернопільська область">Тернопільська область</option>
+                    <option value="Харківська область">Харківська область</option>
+                    <option value="Херсонська область">Херсонська область</option>
+                    <option value="Хмельницька область">Хмельницька область</option>
+                    <option value="Черкаська область">Черкаська область</option>
+                    <option value="Чернівецька область">Чернівецька область</option>
+                    <option value="Чернігівська область">Чернігівська область</option>
+                </select>
+            </div>
+
+            <div class="form-floating mb-3">
+                <label for="city"></label>
+                <select id="city" class="form-select">
+                    <option value="" disabled selected>Оберіть місто</option>
+                    <!-- Міста будуть додані за допомогою JavaScript -->
+                </select>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="address" placeholder="Адреса доставки">
+                <label for="address">Адреса доставки</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="zip" placeholder="Поштовий індекс">
+                <label for="zip">Поштовий індекс</label>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <h4>Сума до оплати</h4>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="totalAmount" placeholder="Сума до оплати" readonly>
+                <label for="totalAmount">Сума до оплати (грн)</label>
+            </div>
+        </div>
+
+        <!-- Інформація про оплату -->
+        
+<!--        <div class="mb-3">-->
+<!--            <h4>Інформація про оплату</h4>-->
+<!--            <div class="form-floating mb-3">-->
+<!--                <input type="text" class="form-control" id="cardName" placeholder="Ім'я на картці">-->
+<!--                <label for="cardName">Ім'я на картці</label>-->
+<!--            </div>-->
+<!--            <div class="form-floating mb-3">-->
+<!--                <input type="text" class="form-control" id="cardNumber" placeholder="Номер картки">-->
+<!--                <label for="cardNumber">Номер картки</label>-->
+<!--            </div>-->
+<!--            <div class="form-floating mb-3">-->
+<!--                <input type="text" class="form-control" id="expiryDate" placeholder="ММ/РР">-->
+<!--                <label for="expiryDate">Термін дії (ММ/РР)</label>-->
+<!--            </div>-->
+<!--            <div class="form-floating mb-3">-->
+<!--                <input type="text" class="form-control" id="cvv" placeholder="CVV">-->
+<!--                <label for="cvv">CVV</label>-->
+<!--            </div>-->
+<!--        </div>-->
+
+        <!-- Кнопка відправлення замовлення -->
+        <button type="submit" class="btn btn-primary mb-3">Оформити замовлення</button>
+    </form>
+</div>
+
+<div th:replace="~{blocks/footer :: footer}"></div>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script>
+    const citiesByRegion = {
+        "Вінницька область": ["Вінниця", "Хмільник", "Жмеринка", "Могилів-Подільський", "Козятин", "Ладижин"],
+        "Волинська область": ["Луцьк", "Ковель", "Нововолинськ", "Камінь-Каширський", "Рожище", "Володимир-Волинський"],
+        "Дніпропетровська область": ["Дніпро", "Кривий Ріг", "Дніпрорудне", "Нікополь", "Павлоград", "Кривий Ріг"],
+        "Донецька область": ["Донецьк", "Маріуполь", "Макіївка", "Горлівка", "Краматорськ", "Слов'янськ"],
+        "Житомирська область": ["Житомир", "Бердичів", "Новоград-Волинський", "Коростень", "Малин", "Іршанськ"],
+        "Закарпатська область": ["Ужгород", "Мукачево", "Хуст", "Берегово", "Виноградів", "Свалява"],
+        "Запорізька область": ["Запоріжжя", "Мелітополь", "Бердянськ", "Енергодар", "Приморськ", "Молочанськ"],
+        "Івано-Франківська область": ["Івано-Франківськ", "Коломия", "Яремче", "Калуш", "Долина", "Косів"],
+        "Київська область": ["Бровари", "Буча", "Васильків", "Вишневе", "Ірпінь", "Боярка"],
+        "Кіровоградська область": ["Кропивницький", "Сміла", "Олександрія", "Світловодськ", "Знам'янка", "Долинська"],
+        "Луганська область": ["Луганськ", "Алчевськ", "Сєвєродонецьк", "Лисичанськ", "Рубіжне", "Старобільськ"],
+        "Львівська область": ["Львів", "Дрогобич", "Стрий", "Самбір", "Миколаїв", "Борислав"],
+        "Миколаївська область": ["Миколаїв", "Вознесенськ", "Первомайськ", "Ялта", "Нова Одеса", "Очаків"],
+        "Одеська область": ["Одеса", "Іллічівськ", "Овідіополь", "Рені", "Южне", "Татарбунари"],
+        "Полтавська область": ["Полтава", "Кременчук", "Миргород", "Гадяч", "Лубни", "Кобеляки"],
+        "Рівненська область": ["Рівне", "Дубно", "Кузнецовськ", "Здолбунів", "Острог", "Корець"],
+        "Сумська область": ["Суми", "Ромни", "Лебедин", "Конотоп", "Шостка", "Білопілля"],
+        "Тернопільська область": ["Тернопіль", "Чортків", "Кременець", "Подільськ", "Збараж", "Бережани"],
+        "Харківська область": ["Харків", "Харків", "Лозова", "Ізюм", "Чугуїв", "Первомайський"],
+        "Херсонська область": ["Херсон", "Каховка", "Нова Каховка", "Скадовськ", "Кам'янка", "Високопілля"],
+        "Хмельницька область": ["Хмельницький", "Шепетівка", "Старокостянтинів", "Кам'янець-Подільський", "Полонне", "Славута"],
+        "Черкаська область": ["Черкаси", "Умань", "Звенигородка", "Корсунь-Шевченківський", "Сміла", "Жашків"],
+        "Чернівецька область": ["Чернівці", "Новоселиця", "Новодністровськ", "Сокиряни", "Кіцмань", "Хотин"],
+        "Чернігівська область": ["Чернігів", "Ніжин", "Прилуки", "Бахмач", "Новгород-Сіверський", "Бобровиця"]
+    };
+
+    function updateCities() {
+        const region = document.getElementById("region").value;
+        const citySelect = document.getElementById("city");
+
+        // Очистити список міст
+        citySelect.innerHTML = "";
+
+        // Додати міста вибраної області
+        citiesByRegion[region].forEach(city => {
+            const option = document.createElement("option");
+            option.text = city;
+            option.value = city;
+            citySelect.appendChild(option);
+        });
+    }
+
+    function loadTotalAmount() {
+        const totalAmount = localStorage.getItem('totalAmount');
+        document.getElementById('totalAmount').value = totalAmount ? `${totalAmount} грн` : '0 грн';
+    }
+
+    window.onload = function() {
+        loadTotalAmount();
+        updateCities();
+    };
+
+
+</script>
+</body>
+</html>

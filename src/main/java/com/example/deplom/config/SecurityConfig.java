@@ -47,6 +47,7 @@ public class SecurityConfig {
                                         "/registerPage",
                                         "/auth/login/**",
                                         "/loginPage",
+                                        "/cart/creatingAnOrder/**",
                                         "/auth/register/**").permitAll()
                                 .requestMatchers(
                                         "/admin/**",

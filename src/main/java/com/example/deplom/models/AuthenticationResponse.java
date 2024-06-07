@@ -6,7 +6,7 @@ import lombok.Getter;
 @Getter
 public class AuthenticationResponse {
 
-    private String token;
+    private final String token;
     private String role;
 
     public AuthenticationResponse(String token) {

@@ -29,54 +29,59 @@
             emptyCartMessage.style.display = 'none';
 
             let tableHTML = `
-            <div class="card">
-                <div class="card-body">
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th scope="col">Товар</th>
-                                <th scope="col">Ціна</th>
-                                <th scope="col"></th>
-                            </tr>
-                        </thead>
-                        <tbody>`;
+        <div class="card">
+            <div class="card-body">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">Товар</th>
+                            <th scope="col">Ціна</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>`;
 
             let totalPrice = 0;
             cart.forEach((item, index) => {
                 tableHTML += `
-                <tr>
-                    <td>${item.name}</td>
-                    <td>${item.price} грн</td>
-                    <td><button class="btn btn-danger" onclick="removeItem(${index})">Видалити</button></td>
-                </tr>`;
+            <tr>
+                <td>${item.name}</td>
+                <td>${item.price} грн</td>
+                <td><button class="btn btn-danger" onclick="removeItem(${index})">Видалити</button></td>
+            </tr>`;
                 totalPrice += parseFloat(item.price);
             });
 
             tableHTML += `
-                        </tbody>
-                    </table>
-                    <div class="d-flex justify-content-between align-items-center mt-4">
-                        <h4>Загальна сума: ${totalPrice} грн</h4>
-                        <div>
-                            <a href="/checkout" class="btn btn-success">Оформити замовлення</a>
-                            <a href="/main" class="btn btn-primary">Зробити ще замовлення</a>
-                        </div>
+                    </tbody>
+                </table>
+                <div class="d-flex justify-content-between align-items-center mt-4">
+                    <h4>Загальна сума: ${totalPrice} грн</h4>
+                    <div>
+                        <a href="/cart/creatingAnOrder" class="btn btn-success">Оформити замовлення</a>
+                        <a href="/main" class="btn btn-primary">Зробити ще замовлення</a>
                     </div>
                 </div>
-            </div>`;
+            </div>
+        </div>`;
 
             cartContent.innerHTML = tableHTML;
+
+            // Зберегти загальну суму в LocalStorage
+            localStorage.setItem('totalAmount', totalPrice);
+
         } else {
             emptyCartMessage.innerHTML = `
-            <div class="alert alert-warning text-center" role="alert">
-                Ваша корзина порожня.
-            </div>
-            <a href="/main" class="btn btn-primary mt-3">Зробити замовлення</a>
-        `;
+        <div class="alert alert-warning text-center" role="alert">
+            Ваша корзина порожня.
+        </div>
+        <a href="/main" class="btn btn-primary mt-3">Зробити замовлення</a>
+    `;
             emptyCartMessage.style.display = 'flex';
             cartContent.style.display = 'none';
         }
     }
+
 
     function removeItem(index) {
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
