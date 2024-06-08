@@ -11,13 +11,16 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "cart")
-public class Cart {
+@Table(name = "order_item")
+public class OrderItem {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String nameProduct;
-    private double price;
-    private String userName;
 
+    private String name;
+    private double price;
+
+    @ManyToOne
+    @JoinColumn(name = "order_id")
+    private Order order;
 }

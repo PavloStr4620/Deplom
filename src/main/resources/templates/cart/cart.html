@@ -106,14 +106,21 @@
         }
     }
 
+
+    document.addEventListener('DOMContentLoaded', function () {
+        loadCart(); // Завантажуємо корзину при завантаженні сторінки
+    });
+
+    document.querySelectorAll('.delete-btn').forEach(button => {
+        button.addEventListener('click', function () {
+            const itemId = this.getAttribute('data-id');
+            deleteItem(itemId);
+        });
+    });
+
     function deleteItem(itemId) {
-        // Виконуємо POST-запит для видалення товару з корзини
-        fetch(`/cart/delete-product-db`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: `id=${encodeURIComponent(itemId)}`,
+        fetch(`/cart/delete-product-db?id=${encodeURIComponent(itemId)}`, {
+            method: 'POST'
         })
             .then(response => {
                 if (!response.ok) {
@@ -122,19 +129,14 @@
                 return response.json();
             })
             .then(data => {
-                // Після успішного видалення товару, оновлюємо корзину
-                console.log('Товар успішно видалено:', data);
-                location.reload(); // Перезавантажуємо сторінку
+                // Reload the cart after successful deletion
+                loadCart();
             })
             .catch(error => {
-                console.error('Виникла помилка під час видалення товару:', error);
+                console.error('Error deleting item:', error);
             });
     }
 
-
-    document.addEventListener('DOMContentLoaded', function () {
-        loadCart(); // Завантажуємо корзину при завантаженні сторінки
-    });
 
 </script>
 

@@ -10,6 +10,7 @@
                 </ul>
                 <div class="text-end d-flex justify-content-end align-items-center">
                     <a href="/cart" id="cartButton" class="nav-link px-2 text-white" style="display:none;"><i class="bi bi-cart"></i></a>
+                    <a id="ButtonOrders" class="nav-link px-2 text-white" style="display:none;"><i class="bi bi-cart-check-fill"></i></a>
                     <a href="/profile" id="profileButton" class="nav-link px-2 text-white" style="display:none;"><i class="bi bi-person-circle"></i></a>
                     <a href="/admin" id="adminButton" class="nav-link px-2 text-white" style="display:none;"><i class="bi bi-person-square"></i></a>
                     <a href="/loginPage" id="loginButton" class="btn btn-outline-light me-2" role="button" style="display:none;">Login</a>
@@ -21,7 +22,14 @@
 
     </header>
     <script>
-        document.getElementById("adminButton").addEventListener("click", function (event) {
+        document.getElementById("ButtonOrders").addEventListener("click", function(event) {
+            event.preventDefault();
+            let userName = localStorage.getItem("userName");
+            window.location.href = "/userOrders?userName=" + userName;
+        });
+
+
+            document.getElementById("adminButton").addEventListener("click", function (event) {
             event.preventDefault(); // Prevent redirection to avoid navigating away
             let token = localStorage.getItem("token"); // Get the token from local storage
             // Check if the token exists
@@ -65,6 +73,7 @@
             let adminButton = document.getElementById("adminButton");
             let profileButton = document.getElementById("profileButton");
             let cartButton = document.getElementById("cartButton");
+            let ButtonOrders = document.getElementById("ButtonOrders");
             let loginButton = document.getElementById("loginButton");
             let signUpButton = document.getElementById("signUpButton");
 
@@ -86,6 +95,10 @@
                 // Show the cart button
                 if (cartButton) {
                     cartButton.style.display = "block";
+                }
+
+                if (ButtonOrders) {
+                    ButtonOrders.style.display = "block";
                 }
 
                 // Show/hide admin and profile buttons based on role

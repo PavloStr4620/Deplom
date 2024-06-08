@@ -37,6 +37,8 @@ public class SecurityConfig {
                                         "/cart/**",
                                         "/add-product-db/**",
                                         "/cart/an-Order/**",
+                                        "/an-Order/**",
+                                        "/userOrders/**",
                                         "/profile/**",
                                         "/camera-page/**",
                                         "/page-create-camera/**",

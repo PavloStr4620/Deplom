@@ -14,17 +14,21 @@
 <div class="container mt-5">
 
     <h2 class="mb-4">Форма замовлення та оплати</h2>
-    <form>
+    <form action="/an-Order" method="post">
         <!-- Інформація про клієнта -->
         <div class="mb-3" th:if="${userAnOrder.isPresent()}" th:with="user=${userAnOrder.get()}">
             <h4>Інформація про клієнта</h4>
             <div class="form-floating mb-3">
-                <input th:value="${user.username}" type="text" class="form-control" id="fullName" placeholder="Повне ім'я" readonly>
-                <label for="fullName">Повне ім'я</label>
+                <input th:value="${user.username}" type="text" class="form-control" id="userName" name="userName" placeholder="Повне ім'я" readonly>
+                <label for="userName">Повне ім'я</label>
             </div>
             <div class="form-floating mb-3">
-                <input th:value="${user.email}" type="email" class="form-control" id="email" placeholder="адреса@example.com">
+                <input th:value="${user.email}" type="email" class="form-control" id="email" name="email" placeholder="адреса@example.com">
                 <label for="email">Електронна адреса</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input pattern="[0-9]{12}" type="tel" class="form-control" id="numberPhone" name="numberPhone" placeholder="Номер телефону" required>
+                <label for="numberPhone">Номер телефону</label>
             </div>
         </div>
 
@@ -33,7 +37,7 @@
             <h4>Інформація про доставку</h4>
             <div class="form-floating mb-3">
                 <label for="region"></label>
-                <select id="region" class="form-select" onchange="updateCities()">
+                <select id="region" name="region" class="form-select" onchange="updateCities()" required>
                     <option value="" disabled selected>Оберіть область</option>
                     <option value="Вінницька область">Вінницька область</option>
                     <option value="Волинська область">Волинська область</option>
@@ -64,51 +68,37 @@
 
             <div class="form-floating mb-3">
                 <label for="city"></label>
-                <select id="city" class="form-select">
+                <select id="city" name="city" class="form-select" required>
                     <option value="" disabled selected>Оберіть місто</option>
                     <!-- Міста будуть додані за допомогою JavaScript -->
                 </select>
             </div>
 
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="address" placeholder="Адреса доставки">
+                <select id="deliveryService" name="deliveryService" class="form-select" required>
+                    <option value="" disabled selected>Оберіть службу доставки</option>
+                    <option value="Нова пошта">Нова пошта</option>
+                    <option value="Укрпошта">Укрпошта</option>
+                </select>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="address" name="address" placeholder="Адреса доставки" required>
                 <label for="address">Адреса доставки</label>
             </div>
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="zip" placeholder="Поштовий індекс">
+                <input pattern="[0-9]{5}" type="text" class="form-control" id="zip" name="zip" placeholder="Поштовий індекс" required>
                 <label for="zip">Поштовий індекс</label>
             </div>
         </div>
 
-        <div class="mb-3" th:each="el : ${totalAmount}">
+        <div class="mb-3">
             <h4>Сума до оплати</h4>
-            <div class="form-floating mb-3" >
-                <input th:value="${totalAmount}" type="text" class="form-control" id="totalAmount" placeholder="Сума до оплати" readonly>
+            <div class="form-floating mb-3">
+                <input th:value="${totalAmount}" type="text" class="form-control" id="totalAmount" name="totalAmount" placeholder="Сума до оплати" readonly>
                 <label for="totalAmount">Сума до оплати (грн)</label>
             </div>
         </div>
-
-        <!-- Інформація про оплату -->
-        
-<!--        <div class="mb-3">-->
-<!--            <h4>Інформація про оплату</h4>-->
-<!--            <div class="form-floating mb-3">-->
-<!--                <input type="text" class="form-control" id="cardName" placeholder="Ім'я на картці">-->
-<!--                <label for="cardName">Ім'я на картці</label>-->
-<!--            </div>-->
-<!--            <div class="form-floating mb-3">-->
-<!--                <input type="text" class="form-control" id="cardNumber" placeholder="Номер картки">-->
-<!--                <label for="cardNumber">Номер картки</label>-->
-<!--            </div>-->
-<!--            <div class="form-floating mb-3">-->
-<!--                <input type="text" class="form-control" id="expiryDate" placeholder="ММ/РР">-->
-<!--                <label for="expiryDate">Термін дії (ММ/РР)</label>-->
-<!--            </div>-->
-<!--            <div class="form-floating mb-3">-->
-<!--                <input type="text" class="form-control" id="cvv" placeholder="CVV">-->
-<!--                <label for="cvv">CVV</label>-->
-<!--            </div>-->
-<!--        </div>-->
 
         <!-- Кнопка відправлення замовлення -->
         <button type="submit" class="btn btn-primary mb-3">Оформити замовлення</button>
@@ -117,7 +107,7 @@
 
 <div th:replace="~{blocks/footer :: footer}"></div>
 
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     const citiesByRegion = {
         "Вінницька область": ["Вінниця", "Хмільник", "Жмеринка", "Могилів-Подільський", "Козятин", "Ладижин"],
@@ -132,46 +122,38 @@
         "Кіровоградська область": ["Кропивницький", "Сміла", "Олександрія", "Світловодськ", "Знам'янка", "Долинська"],
         "Луганська область": ["Луганськ", "Алчевськ", "Сєвєродонецьк", "Лисичанськ", "Рубіжне", "Старобільськ"],
         "Львівська область": ["Львів", "Дрогобич", "Стрий", "Самбір", "Миколаїв", "Борислав"],
-        "Миколаївська область": ["Миколаїв", "Вознесенськ", "Первомайськ", "Ялта", "Нова Одеса", "Очаків"],
-        "Одеська область": ["Одеса", "Іллічівськ", "Овідіополь", "Рені", "Южне", "Татарбунари"],
-        "Полтавська область": ["Полтава", "Кременчук", "Миргород", "Гадяч", "Лубни", "Кобеляки"],
-        "Рівненська область": ["Рівне", "Дубно", "Кузнецовськ", "Здолбунів", "Острог", "Корець"],
-        "Сумська область": ["Суми", "Ромни", "Лебедин", "Конотоп", "Шостка", "Білопілля"],
-        "Тернопільська область": ["Тернопіль", "Чортків", "Кременець", "Подільськ", "Збараж", "Бережани"],
-        "Харківська область": ["Харків", "Харків", "Лозова", "Ізюм", "Чугуїв", "Первомайський"],
-        "Херсонська область": ["Херсон", "Каховка", "Нова Каховка", "Скадовськ", "Кам'янка", "Високопілля"],
-        "Хмельницька область": ["Хмельницький", "Шепетівка", "Старокостянтинів", "Кам'янець-Подільський", "Полонне", "Славута"],
-        "Черкаська область": ["Черкаси", "Умань", "Звенигородка", "Корсунь-Шевченківський", "Сміла", "Жашків"],
-        "Чернівецька область": ["Чернівці", "Новоселиця", "Новодністровськ", "Сокиряни", "Кіцмань", "Хотин"],
-        "Чернігівська область": ["Чернігів", "Ніжин", "Прилуки", "Бахмач", "Новгород-Сіверський", "Бобровиця"]
+        "Миколаївська область": ["Миколаїв", "Южноукраїнськ", "Вознесенськ", "Баштанка", "Первомайськ", "Очаків"],
+        "Одеська область": ["Одеса", "Ізмаїл", "Білгород-Дністровський", "Чорноморськ", "Южне", "Татарбунари"],
+        "Полтавська область": ["Полтава", "Кременчук", "Лубни", "Гадяч", "Миргород", "Карлівка"],
+        "Рівненська область": ["Рівне", "Дубно", "Острог", "Здолбунів", "Костопіль", "Сарни"],
+        "Сумська область": ["Суми", "Конотоп", "Охтирка", "Шостка", "Тростянець", "Лебедин"],
+        "Тернопільська область": ["Тернопіль", "Чортків", "Кременець", "Борщів", "Збараж", "Бережани"],
+        "Харківська область": ["Харків", "Ізюм", "Лозова", "Куп'янськ", "Чугуїв", "Мерефа"],
+        "Херсонська область": ["Херсон", "Нова Каховка", "Каховка", "Гола Пристань", "Скадовськ", "Цюрупинськ"],
+        "Хмельницька область": ["Хмельницький", "Кам'янець-Подільський", "Славута", "Шепетівка", "Дунаївці", "Полонне", "Волочиськ"],
+        "Черкаська область": ["Черкаси", "Умань", "Сміла", "Канів", "Золотоноша", "Ватутіне"],
+        "Чернівецька область": ["Чернівці", "Новодністровськ", "Кіцмань", "Сторожинець", "Герца", "Заставна"],
+        "Чернігівська область": ["Чернігів", "Ніжин", "Прилуки", "Новгород-Сіверський", "Бахмач", "Борзна"]
     };
 
     function updateCities() {
-        const region = document.getElementById("region").value;
+        const regionSelect = document.getElementById("region");
         const citySelect = document.getElementById("city");
+        const selectedRegion = regionSelect.value;
 
         // Очистити список міст
-        citySelect.innerHTML = "";
+        citySelect.innerHTML = '<option value="" disabled selected>Оберіть місто</option>';
 
-        // Додати міста вибраної області
-        citiesByRegion[region].forEach(city => {
-            const option = document.createElement("option");
-            option.text = city;
-            option.value = city;
-            citySelect.appendChild(option);
-        });
+        if (selectedRegion && citiesByRegion[selectedRegion]) {
+            const cities = citiesByRegion[selectedRegion];
+            cities.forEach(city => {
+                const option = document.createElement("option");
+                option.value = city;
+                option.text = city;
+                citySelect.appendChild(option);
+            });
+        }
     }
-
-    // function loadTotalAmount() {
-    //     const totalAmount = localStorage.getItem('totalAmount');
-    //     document.getElementById('totalAmount').value = totalAmount ? `${totalAmount} грн` : '0 грн';
-    // }
-
-    // window.onload = function() {
-    //     updateCities();
-    // };
-
-
 </script>
 </body>
 </html>

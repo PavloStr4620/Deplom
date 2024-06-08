@@ -1,4 +1,4 @@
-package com.example.deplom.controllers;
+package com.example.deplom.RestControlers;
 
 import com.example.deplom.DTOS.UserDTO;
 import com.example.deplom.service.UserService;
