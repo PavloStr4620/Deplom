@@ -1,4 +1,4 @@
-package com.example.deplom.controllers;
+package com.example.deplom.controllers.product;
 import com.example.deplom.models.Camera;
 import com.example.deplom.repository.CameraRepository;
 import com.example.deplom.service.CameraService;
@@ -32,7 +32,7 @@ public class PageCameraControllers {
     @GetMapping
     public String displayingCamerasPage(Model model,
                                         @RequestParam(defaultValue = "0") int page,
-                                        @RequestParam(defaultValue = "10") int size) {
+                                        @RequestParam(defaultValue = "9") int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<Camera> camera = cameraRepository.findAll(pageable);
 
@@ -121,63 +121,63 @@ public class PageCameraControllers {
         return "redirect:/camera-page";
     }
 
-//    @GetMapping("/search-camera")
-//    public String searchCamera(@RequestParam("brand") String brand, Model model) {
-//        List<Camera> search_camera = cameraService.findCamerasByBrand(brand);
-//        model.addAttribute("search_camera", search_camera);
-//        return "Product/Camera/searchCamera";
-//    }
-
     @GetMapping("/search-camera")
-    public String searchCamera(@RequestParam(value = "brand", required = false) String brand,
-                               @RequestParam(value = "sort", required = false) String sort,
-                               @RequestParam(value = "priceFrom", required = false) Double priceFrom,
-                               @RequestParam(value = "priceTo", required = false) Double priceTo,
-                               Model model) {
-        List<Camera> search_camera;
-        if (brand != null && !brand.isEmpty()) {
-            search_camera = cameraService.findCamerasByBrand(brand);
-        } else {
-            search_camera = cameraService.getAllCamera();
-        }
-
-        if (priceFrom != null || priceTo != null) {
-            final Double finalPriceFrom = (priceFrom != null) ? priceFrom : Double.MIN_VALUE;
-            final Double finalPriceTo = (priceTo != null) ? priceTo : Double.MAX_VALUE;
-
-            search_camera = search_camera.stream()
-                    .filter(camera -> camera.getPrice() >= finalPriceFrom && camera.getPrice() <= finalPriceTo)
-                    .collect(Collectors.toList());
-        }
-
-        if (sort != null) {
-            switch (sort) {
-                case "priceAsc":
-                    search_camera = search_camera.stream()
-                            .sorted(Comparator.comparing(Camera::getPrice))
-                            .collect(Collectors.toList());
-                    break;
-                case "priceDesc":
-                    search_camera = search_camera.stream()
-                            .sorted(Comparator.comparing(Camera::getPrice).reversed())
-                            .collect(Collectors.toList());
-                    break;
-                case "nameAsc":
-                    search_camera = search_camera.stream()
-                            .sorted(Comparator.comparing(Camera::getModel))
-                            .collect(Collectors.toList());
-                    break;
-                case "nameDesc":
-                    search_camera = search_camera.stream()
-                            .sorted(Comparator.comparing(Camera::getModel).reversed())
-                            .collect(Collectors.toList());
-                    break;
-            }
-        }
-
+    public String searchCamera(@RequestParam("brand") String brand, Model model) {
+        List<Camera> search_camera = cameraService.findCamerasByBrand(brand);
         model.addAttribute("search_camera", search_camera);
         return "Product/Camera/searchCamera";
     }
+
+//    @GetMapping("/search-camera")
+//    public String searchCamera(@RequestParam(value = "brand", required = false) String brand,
+//                               @RequestParam(value = "sort", required = false) String sort,
+//                               @RequestParam(value = "priceFrom", required = false) Double priceFrom,
+//                               @RequestParam(value = "priceTo", required = false) Double priceTo,
+//                               Model model) {
+//        List<Camera> search_camera;
+//        if (brand != null && !brand.isEmpty()) {
+//            search_camera = cameraService.findCamerasByBrand(brand);
+//        } else {
+//            search_camera = cameraService.getAllCamera();
+//        }
+//
+//        if (priceFrom != null || priceTo != null) {
+//            final Double finalPriceFrom = (priceFrom != null) ? priceFrom : Double.MIN_VALUE;
+//            final Double finalPriceTo = (priceTo != null) ? priceTo : Double.MAX_VALUE;
+//
+//            search_camera = search_camera.stream()
+//                    .filter(camera -> camera.getPrice() >= finalPriceFrom && camera.getPrice() <= finalPriceTo)
+//                    .collect(Collectors.toList());
+//        }
+//
+//        if (sort != null) {
+//            switch (sort) {
+//                case "priceAsc":
+//                    search_camera = search_camera.stream()
+//                            .sorted(Comparator.comparing(Camera::getPrice))
+//                            .collect(Collectors.toList());
+//                    break;
+//                case "priceDesc":
+//                    search_camera = search_camera.stream()
+//                            .sorted(Comparator.comparing(Camera::getPrice).reversed())
+//                            .collect(Collectors.toList());
+//                    break;
+//                case "nameAsc":
+//                    search_camera = search_camera.stream()
+//                            .sorted(Comparator.comparing(Camera::getModel))
+//                            .collect(Collectors.toList());
+//                    break;
+//                case "nameDesc":
+//                    search_camera = search_camera.stream()
+//                            .sorted(Comparator.comparing(Camera::getModel).reversed())
+//                            .collect(Collectors.toList());
+//                    break;
+//            }
+//        }
+//
+//        model.addAttribute("search_camera", search_camera);
+//        return "Product/Camera/searchCamera";
+//    }
 
 
 }

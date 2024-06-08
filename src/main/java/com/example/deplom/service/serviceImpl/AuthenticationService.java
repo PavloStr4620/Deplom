@@ -41,8 +41,9 @@ public class AuthenticationService {
         );
         User user = repository.findByUsername(request.getUsername()).orElseThrow();
         String token = jwtService.generateToken(user);
-        String role = String.valueOf(user.getRole()); // Припустимо, що User має метод getRole()
-        return new AuthenticationResponse(token, role);
+        String role = String.valueOf(user.getRole());
+        String userName = user.getUsername();
+        return new AuthenticationResponse(token, role, userName);
     }
 
 }

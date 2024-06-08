@@ -12,22 +12,19 @@
 <div th:replace="~{blocks/header :: header}"></div>
 
 <div class="container mt-5">
+
     <h2 class="mb-4">Форма замовлення та оплати</h2>
     <form>
         <!-- Інформація про клієнта -->
-        <div class="mb-3">
+        <div class="mb-3" th:if="${userAnOrder.isPresent()}" th:with="user=${userAnOrder.get()}">
             <h4>Інформація про клієнта</h4>
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="fullName" placeholder="Повне ім'я">
+                <input th:value="${user.username}" type="text" class="form-control" id="fullName" placeholder="Повне ім'я" readonly>
                 <label for="fullName">Повне ім'я</label>
             </div>
             <div class="form-floating mb-3">
-                <input type="email" class="form-control" id="email" placeholder="адреса@example.com">
+                <input th:value="${user.email}" type="email" class="form-control" id="email" placeholder="адреса@example.com">
                 <label for="email">Електронна адреса</label>
-            </div>
-            <div class="form-floating mb-3">
-                <input type="tel" class="form-control" id="phone" placeholder="Номер телефону">
-                <label for="phone">Номер телефону</label>
             </div>
         </div>
 
@@ -83,10 +80,10 @@
             </div>
         </div>
 
-        <div class="mb-3">
+        <div class="mb-3" th:each="el : ${totalAmount}">
             <h4>Сума до оплати</h4>
-            <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="totalAmount" placeholder="Сума до оплати" readonly>
+            <div class="form-floating mb-3" >
+                <input th:value="${totalAmount}" type="text" class="form-control" id="totalAmount" placeholder="Сума до оплати" readonly>
                 <label for="totalAmount">Сума до оплати (грн)</label>
             </div>
         </div>
@@ -165,15 +162,14 @@
         });
     }
 
-    function loadTotalAmount() {
-        const totalAmount = localStorage.getItem('totalAmount');
-        document.getElementById('totalAmount').value = totalAmount ? `${totalAmount} грн` : '0 грн';
-    }
+    // function loadTotalAmount() {
+    //     const totalAmount = localStorage.getItem('totalAmount');
+    //     document.getElementById('totalAmount').value = totalAmount ? `${totalAmount} грн` : '0 грн';
+    // }
 
-    window.onload = function() {
-        loadTotalAmount();
-        updateCities();
-    };
+    // window.onload = function() {
+    //     updateCities();
+    // };
 
 
 </script>

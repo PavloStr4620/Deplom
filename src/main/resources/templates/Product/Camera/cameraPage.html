@@ -101,11 +101,13 @@
                 <h5>Ціна</h5>
                 <div class="col-md-4">
                     <label for="price-from" class="form-label">Від</label>
-                    <input type="number" class="form-control" id="price-from" name="priceFrom" placeholder="Мін. ціна" min="0">
+                    <input type="number" class="form-control" id="price-from" name="priceFrom" placeholder="Мін. ціна"
+                           min="0">
                 </div>
                 <div class="col-md-4 mb-3">
                     <label for="price-to" class="form-label">До</label>
-                    <input type="number" class="form-control" id="price-to" name="priceTo" placeholder="Макс. ціна" max="99999">
+                    <input type="number" class="form-control" id="price-to" name="priceTo" placeholder="Макс. ціна"
+                           max="99999">
                 </div>
 
                 <select class="form-control me-2" name="sort" id="sort">
@@ -116,8 +118,10 @@
                 </select>
 
 
-                <button type="submit" class="btn btn-primary mt-3" >Відфільтрувати</button>
-                <button type="submit" class="btn btn-primary mt-3" onclick="window.location.href='/camera-page'">Скинути фільтр</button>
+                <button type="submit" class="btn btn-primary mt-3">Відфільтрувати</button>
+                <button type="submit" class="btn btn-primary mt-3" onclick="window.location.href='/camera-page'">Скинути
+                    фільтр
+                </button>
             </form>
         </div>
 
@@ -126,34 +130,37 @@
             <div class="album py-5 bg-body-tertiary">
                 <div class="container">
 
-                    <button type="button" class="btn btn-primary me-2 mb-2" onclick="window.location.href='/camera-page/page-create-camera'">Додати</button>
+                    <button id="buttonAdd" type="button" class="btn btn-primary me-2 mb-2"
+                            onclick="window.location.href='/camera-page/page-create-camera'">Додати
+                    </button>
 
                     <!--Пошук-->
                     <div class="row justify-content-center mb-3">
                         <div class="col-md-6">
                             <form class="d-flex" method="get" action="/camera-page/search-camera">
-                                <input class="form-control me-2" id="search-camera" name="brand" type="search" placeholder="Пошук" aria-label="Пошук">
+                                <input class="form-control me-2" id="search-camera" name="brand" type="search"
+                                       placeholder="Пошук" aria-label="Пошук">
                                 <button class="btn btn-outline-success" type="submit">Пошук</button>
                             </form>
                         </div>
                     </div>
 
-<!--                    <div class="row justify-content-center mb-3">-->
-<!--                        <div class="col-md-6">-->
-<!--                            <form class="d-flex" method="get" action="/camera-page/search-camera">-->
-<!--                                <input class="form-control me-2" id="search-camera" name="brand" type="search" placeholder="Пошук" aria-label="Пошук">-->
-<!--                                <select class="form-control me-2" name="sort" id="sort">-->
-<!--                                    <option value="priceAsc">Ціна (зростання)</option>-->
-<!--                                    <option value="priceDesc">Ціна (спадання)</option>-->
-<!--                                    <option value="nameAsc">Назва (А-Я)</option>-->
-<!--                                    <option value="nameDesc">Назва (Я-А)</option>-->
-<!--                                </select>-->
-<!--                                <button class="btn btn-outline-success" type="submit">Пошук</button>-->
-<!--                            </form>-->
-<!--                        </div>-->
-<!--                    </div>-->
+                    <!--                    <div class="row justify-content-center mb-3">-->
+                    <!--                        <div class="col-md-6">-->
+                    <!--                            <form class="d-flex" method="get" action="/camera-page/search-camera">-->
+                    <!--                                <input class="form-control me-2" id="search-camera" name="brand" type="search" placeholder="Пошук" aria-label="Пошук">-->
+                    <!--                                <select class="form-control me-2" name="sort" id="sort">-->
+                    <!--                                    <option value="priceAsc">Ціна (зростання)</option>-->
+                    <!--                                    <option value="priceDesc">Ціна (спадання)</option>-->
+                    <!--                                    <option value="nameAsc">Назва (А-Я)</option>-->
+                    <!--                                    <option value="nameDesc">Назва (Я-А)</option>-->
+                    <!--                                </select>-->
+                    <!--                                <button class="btn btn-outline-success" type="submit">Пошук</button>-->
+                    <!--                            </form>-->
+                    <!--                        </div>-->
+                    <!--                    </div>-->
 
-                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" >
+                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                         <!--Карточка camera-->
                         <div class="col-md-4" th:each="el : ${camera}">
                             <a th:href="@{/camera-page/page-camera-id/{id}(id=${el.id})}"
@@ -205,35 +212,19 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    // function sendSearchQuery() {
-    //     // Отримуємо значення з поля пошуку
-    //     let searchValue = document.getElementById("search-camera").value;
-    //
-    //     // Створюємо новий об'єкт XMLHttpRequest
-    //     let xhr = new XMLHttpRequest();
-    //
-    //     // Встановлюємо метод та адресу, куди будемо відправляти запит
-    //     xhr.open("POST", "/your-controller-url", true);
-    //
-    //     // Встановлюємо заголовок запиту
-    //     xhr.setRequestHeader("Content-Type", "application/json");
-    //
-    //     // Встановлюємо обробник подій для відповіді на запит
-    //     xhr.onreadystatechange = function () {
-    //         if (xhr.readyState === XMLHttpRequest.DONE) {
-    //             if (xhr.status === 200) {
-    //                 // Виконуємо дії з отриманими даними, якщо все пройшло успішно
-    //                 console.log("Отримано відповідь від сервера:", xhr.responseText);
-    //             } else {
-    //                 // Обробляємо помилку, якщо вона сталася
-    //                 console.error("Помилка при виконанні запиту:", xhr.status);
-    //             }
-    //         }
-    //     };
-    //
-    //     // Відправляємо дані на сервер
-    //     xhr.send(JSON.stringify({ query: searchValue }));
-    // }
+    document.addEventListener("DOMContentLoaded", function () {
+        let role = localStorage.getItem("role");
+        let add = document.getElementById("buttonAdd");
+
+
+        // Show/hide admin and profile buttons based on role
+        if (role === "ADMIN") {
+            add.style.display = "block";
+        } else {
+            add.style.display = "none";
+        }
+
+    });
 </script>
 
 </body>

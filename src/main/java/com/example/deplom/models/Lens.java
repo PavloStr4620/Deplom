@@ -17,7 +17,7 @@ public class Lens {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private String bayonet; // Байонет
-    private String  focalLength; // Фокусна відстань
+    private String focalLength; // Фокусна відстань
     private String lensType; // Тип Обєктива
     private String focus; // Фокусування
     private String manufacturers; // Виробники

@@ -8,14 +8,16 @@ public class AuthenticationResponse {
 
     private final String token;
     private String role;
+    private String userName;
 
     public AuthenticationResponse(String token) {
         this.token = token;
     }
 
-    public AuthenticationResponse(String token, String role) {
+    public AuthenticationResponse(String token, String role, String userName) {
         this.token = token;
         this.role = role;
+        this.userName = userName;
     }
 
 }

@@ -62,4 +62,9 @@ public class LensServiceImpl implements LensService {
         List<Lens> lens = lensRepository.findAll(pageRequest).getContent();
         return lens.stream().map(LensMapper.INSTANCE::toDTO).collect(Collectors.toList());
     }
+
+    @Override
+    public List<Lens> findLensByBayonet(String bayonet) {
+        return lensRepository.findByBayonet(bayonet);
+    }
 }

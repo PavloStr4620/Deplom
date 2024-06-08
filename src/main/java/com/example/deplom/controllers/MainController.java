@@ -6,8 +6,6 @@ import com.example.deplom.models.enums.Role;
 import com.example.deplom.repository.UserRepository;
 import com.example.deplom.service.serviceImpl.AuthenticationService;
 import com.example.deplom.service.serviceImpl.JwtService;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +17,7 @@ import org.springframework.ui.Model;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 
 @Controller
@@ -80,19 +79,6 @@ public class MainController {
         return ResponseEntity.ok(token);
     }
 
-//    @PostMapping("/loginPage")
-//    public ResponseEntity<Map<String, String>> login(@RequestParam String username, @RequestParam String password) {
-//        User request = new User();
-//        request.setUsername(username);
-//        request.setPassword(password);
-//        AuthenticationResponse response = authService.authenticate(request);
-//
-//        Map<String, String> responseBody = new HashMap<>();
-//        responseBody.put("token", response.getToken());
-//
-//        return ResponseEntity.ok(responseBody);
-//    }
-
     @PostMapping("/loginPage")
     public ResponseEntity<Map<String, String>> login(@RequestParam String username, @RequestParam String password) {
         User request = new User();
@@ -102,10 +88,10 @@ public class MainController {
 
         Map<String, String> responseBody = new HashMap<>();
         responseBody.put("token", response.getToken());
-        responseBody.put("role", response.getRole()); // Include the role in the response
+        responseBody.put("role", response.getRole());
+        responseBody.put("userName", response.getUserName());
 
         return ResponseEntity.ok(responseBody);
     }
-
 
 }

@@ -60,4 +60,9 @@ public class TripodServiceImpl implements TripodService {
         return tripods.stream().map(TripodMapper.INSTANCE::toDTO).collect(Collectors.toList());
     }
 
+    @Override
+    public List<Tripod> findTripodByType(String type) {
+        return tripodRepository.findByType(type);
+    }
+
 }

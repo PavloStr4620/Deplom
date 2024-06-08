@@ -67,10 +67,11 @@
     <div class="col-md-8 mt-2" th:if="${camera_id.isPresent()}" th:with="camera=${camera_id.get()}">
         <div class="row">
             <div class="col-md-8">
-                <img src="https://i1.adis.ws/i/canon/eos-r6-rf24-105mm-f4_7.1_is_stm_front-on_square_6412568cc0e7484b96bd55e43069a56c?$prod-grid-1by1-jpg$" class="img-fluid" alt="Фото товару">
+                <img src="https://i1.adis.ws/i/canon/eos-r6-rf24-105mm-f4_7.1_is_stm_front-on_square_6412568cc0e7484b96bd55e43069a56c?$prod-grid-1by1-jpg$"
+                     class="img-fluid" alt="Фото товару">
             </div>
             <div class="col-md-4">
-                <h2 class="card-text" th:text="${camera.brand}"></h2>
+                <h2 class="card-text" id="brand" th:text="${camera.brand}"></h2>
                 <p class="card-text" th:text="'Модель: ' + ${camera.model}"></p>
                 <p class="card-text" th:text="'Матриця: ' + ${camera.matrix}"></p>
                 <p class="card-text" th:text="'Зйомка та функції: ' + ${camera.shootingFeatures}"></p>
@@ -78,59 +79,72 @@
                 <p class="card-text" th:text="'Вага: ' + ${camera.cameraWeight}"></p>
                 <p class="card-text" th:text="'Кратність збільшення: ' + ${camera.multiplicityOfIncrease}"></p>
                 <p class="card-text" th:text="'Діагональ дисплея: ' + ${camera.displayDiagonal}"></p>
-                <h5 th:text="'Ціна: ' + ${camera.price}"></h5>
-                <button class="btn btn-primary" id="addToCart" th:data-name="${camera.model}" th:data-price="${camera.price}">В корзину</button>
+                <h5 id="price" th:text="'Ціна: ' + ${camera.price}"></h5>
+
+                <form method="post" action="/cart/add-product-db">
+                    <input type="hidden" name="nameProduct" th:value="${camera.brand + ' ' + camera.model}" />
+                    <input type="hidden" name="price" th:value="${camera.price}" />
+                    <input type="hidden" name="userName" id="userNameInput" />
+                    <button type="submit" class="btn btn-primary">В корзину</button>
+                </form>
             </div>
             <div class="col-md-4 mt-3">
-                <button type="button" class="btn btn-primary" id="updateToCameraCart" th:data-id="${camera.id}">Редагувати</button>
-                <button type="button" class="btn btn-primary" id="deleteToCameraCart" th:data-id="${camera.id}">Видалити</button>
+                <button type="button" class="btn btn-primary mb-3" id="updateToCameraCart" th:data-id="${camera.id}">
+                    Редагувати
+                </button>
+                <button type="button" class="btn btn-primary" id="deleteToCameraCart" th:data-id="${camera.id}">
+                    Видалити
+                </button>
             </div>
         </div>
     </div>
 </div>
 
-
-<div th:replace="~{blocks/footer :: footer}"></div>
-
 <script>
-    //Добавити в корзину
-    document.getElementById('addToCart').addEventListener('click', function() {
-        const name = this.getAttribute('data-name');
-        const price = this.getAttribute('data-price');
+    document.addEventListener("DOMContentLoaded", function () {
+        let role = localStorage.getItem("role");
+        let update = document.getElementById("updateToCameraCart");
+        let remove = document.getElementById("deleteToCameraCart");
 
-        const cart = JSON.parse(localStorage.getItem('cart')) || [];
-        cart.push({ name, price });
-        localStorage.setItem('cart', JSON.stringify(cart));
 
-        alert('Товар додано до корзини');
+        if (role === "ADMIN") {
+            update.style.display = "block";
+            remove.style.display = "block";
+        } else {
+            update.style.display = "none";
+            remove.style.display = "none";
+        }
+
     });
 
-    //Відкриває сторінку з редагуванням і передає туди id
-    const updateToCameraCartButton = document.getElementById('updateToCameraCart');
+    document.addEventListener('DOMContentLoaded', function () {
+        // Отримуємо userName з local storage
+        const userName = localStorage.getItem('userName');
 
-    updateToCameraCartButton.addEventListener('click', function() {
-        const cameraId = this.getAttribute('data-id');
-
-        // Передайте id камеры на страницу редактирования
-        window.location.href = '/camera-page/page-update-camera?id=' + cameraId;
-    });
-
-    //Відкриває сторінку з видаленням товару через id
-    const deleteFromCartButton = document.getElementById('deleteToCameraCart');
-
-    deleteFromCartButton.addEventListener('click', function() {
-        const cameraId = this.getAttribute('data-id');
-
-        const confirmation = confirm('Ви впевнені, що хочете видалити цей товар?');
-
-        if (confirmation) {
-            // Передайте id камери на сторінку видалення
-            window.location.href = '/camera-page/delete-camera?id=' + cameraId;
+        // Вставляємо userName у прихований інпут
+        const userNameInput = document.getElementById('userNameInput');
+        if (userNameInput) {
+            userNameInput.value = userName;
         }
     });
 
+    // Відкриває сторінку з редагуванням і передає туди id
+    document.getElementById('updateToCameraCart').addEventListener('click', function () {
+        const cameraId = this.getAttribute('data-id');
+        window.location.href = '/camera-page/page-update-camera?id=' + cameraId;
+    });
 
+    // Відкриває сторінку з видаленням товару через id
+    document.getElementById('deleteToCameraCart').addEventListener('click', function () {
+        const cameraId = this.getAttribute('data-id');
+        const confirmation = confirm('Ви впевнені, що хочете видалити цей товар?');
+        if (confirmation) {
+            window.location.href = '/camera-page/delete-camera?id=' + cameraId;
+        }
+    });
 </script>
+
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+

@@ -47,28 +47,30 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    document.getElementById('addToCart').addEventListener('click', function() {
-        const name = this.getAttribute('data-name');
-        const price = this.getAttribute('data-price');
+    document.addEventListener("DOMContentLoaded", function () {
+        let role = localStorage.getItem("role");
+        let update = document.getElementById("updateToLensCart");
+        let remove = document.getElementById("deleteToLensCart");
 
-        const cart = JSON.parse(localStorage.getItem('cart')) || [];
-        cart.push({ name, price });
-        localStorage.setItem('cart', JSON.stringify(cart));
 
-        alert('Товар додано до корзини');
+        if (role === "ADMIN") {
+            update.style.display = "block";
+            remove.style.display = "block";
+        } else {
+            update.style.display = "none";
+            remove.style.display = "none";
+        }
+
     });
 
-    //Відкриває сторінку з редагуванням і передає туди id
     const updateToCameraCartButton = document.getElementById('updateToLensCart');
 
     updateToCameraCartButton.addEventListener('click', function() {
         const lensId = this.getAttribute('data-id');
 
-        // Передайте id камеры на страницу редактирования
         window.location.href = '/lens-page/page-update-lens?id=' + lensId;
     });
 
-    //Відкриває сторінку з видаленням товару через id
     const deleteFromCartButton = document.getElementById('deleteToLensCart');
 
     deleteFromCartButton.addEventListener('click', function() {
@@ -77,10 +79,10 @@
         const confirmation = confirm('Ви впевнені, що хочете видалити цей товар?');
 
         if (confirmation) {
-            // Передайте id камери на сторінку видалення
             window.location.href = '/lens-page/delete-lens?id=' + lensId;
         }
     });
+
 </script>
 
 </body>

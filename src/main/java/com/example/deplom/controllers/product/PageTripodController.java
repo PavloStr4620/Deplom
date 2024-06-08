@@ -1,28 +1,36 @@
-package com.example.deplom.controllers;
+package com.example.deplom.controllers.product;
 
+import com.example.deplom.models.Camera;
 import com.example.deplom.models.Tripod;
 import com.example.deplom.repository.TripodRepository;
 import com.example.deplom.service.TripodService;
 import jakarta.ws.rs.NotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
 @RequestMapping("/tripod-page")
 public class PageTripodController {
-    private TripodRepository tripodRepository;
-    private TripodService tripodService;
+    private final TripodRepository tripodRepository;
+    private final TripodService tripodService;
     public PageTripodController(TripodRepository tripodRepository, TripodService tripodService) {
         this.tripodRepository = tripodRepository;
         this.tripodService = tripodService;
     }
 
     @GetMapping()
-    public String displayingTripodPage(Model model){
-        Iterable<Tripod> tripod = tripodRepository.findAll();
+    public String displayingTripodPage(Model model,
+                                       @RequestParam(defaultValue = "0") int page,
+                                       @RequestParam(defaultValue = "9") int size){
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Tripod> tripod = tripodRepository.findAll(pageable);
         model.addAttribute("tripod", tripod);
         return "Product/Tripod/tripodPage";
     }
@@ -98,5 +106,12 @@ public class PageTripodController {
     public String deleteTripodById(@RequestParam("id") Long id){
         tripodService.deleteTripodById(id);
         return "redirect:/tripod-page";
+    }
+
+    @GetMapping("/search-tripod")
+    public String searchTripod(@RequestParam("type") String type, Model model) {
+        List<Tripod> search_tripod = tripodService.findTripodByType(type);
+        model.addAttribute("search_tripod", search_tripod);
+        return "Product/Tripod/searchTripod";
     }
 }

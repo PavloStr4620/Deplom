@@ -21,12 +21,14 @@
                 const data = await response.json();
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('role', data.role); // Збереження ролі користувача
+                localStorage.setItem('userName', data.userName); // Збереження імені користувача
                 window.location.href = '/main';
             } else {
                 // Обробка помилок
                 console.error('Login failed');
             }
         }
+
 
         async function login(event) {
             event.preventDefault();
@@ -59,38 +61,6 @@
 
             return await response.json();
         }
-
-        function decodeToken(token) {
-            try {
-                const decoded = jwt_decode(token);
-                console.log('Decoded Token:', decoded);
-                return decoded;
-            } catch (error) {
-                console.error('Failed to decode token:', error);
-                return null;
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const token = localStorage.getItem('token');
-            const role = localStorage.getItem('role'); // Отримання ролі користувача
-
-            if (token) {
-                const decodedToken = decodeToken(token);
-                if (decodedToken) {
-                    console.log('Token payload:', decodedToken);
-                    console.log('User role:', role); // Вивід ролі користувача
-                }
-
-                apiRequest('/api/some-endpoint')
-                    .then(data => {
-                        console.log('Data:', data);
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
-            }
-        });
     </script>
 
 
