@@ -56,8 +56,13 @@ public class SecurityConfig {
                                         "/auth/register/**").permitAll()
                                 .requestMatchers(
                                         "/admin/**",
-                                        "/users/find-by-id/",
-                                        "/users/get-All-Users/",
+                                        "/adminUserList/**",
+                                        "/admin/editOrderStatus/**",
+                                        "/admin/updateOrderStatus/**",
+                                        "/users/find-by-id/**",
+                                        "/updateOrderStatus/**",
+                                        "/editOrderStatus/**",
+                                        "/users/get-All-Users/**",
                                         "/camera/**",
                                         "/lens/",
                                         "tripod/**").hasAnyAuthority("ADMIN")
