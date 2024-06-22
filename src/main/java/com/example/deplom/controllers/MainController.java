@@ -6,18 +6,13 @@ import com.example.deplom.models.enums.Role;
 import com.example.deplom.repository.UserRepository;
 import com.example.deplom.service.serviceImpl.AuthenticationService;
 import com.example.deplom.service.serviceImpl.JwtService;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.ui.Model;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 
 @Controller
@@ -36,38 +31,29 @@ public class MainController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @GetMapping("/user")
-    @PreAuthorize("hasAuthority('USER')")
-    public ResponseEntity<String> exampleAdminEndpoint() {
-        // Ваш код для контролера, доступного тільки адміністраторам
-        return ResponseEntity.ok("Цей ресурс доступний тільки юзера");
-    }
-
     @GetMapping("/main")
     public String showMainPage1() {
-        return "mainPage"; // Назва HTML-файлу без розширення .html, якщо використовується Thymeleaf або інший template engine
+        return "mainPage";
     }
 
     @GetMapping("/registerPage")
     public String registerPage() {
-        return "registerPage"; // Назва HTML-файлу без розширення .html, якщо використовується Thymeleaf або інший template engine
+        return "registerPage";
     }
 
     @GetMapping("/loginPage")
     public String loginPage() {
-        return "loginPage"; // Назва HTML-файлу без розширення .html, якщо використовується Thymeleaf або інший template engine
+        return "loginPage";
     }
 
     @PostMapping("/registerPage")
     public String registerUser(@RequestParam String username, @RequestParam String email, @RequestParam String password) {
-        // Створення об'єкта користувача
         User user = new User();
         user.setUsername(username);
         user.setEmail(email);
         user.setPassword(passwordEncoder.encode(password));
         user.setRole(Role.USER);
 
-        // Збереження користувача в базі даних
         userRepository.save(user);
 
         return "redirect:/loginPage";

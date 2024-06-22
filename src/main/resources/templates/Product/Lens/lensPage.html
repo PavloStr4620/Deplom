@@ -54,20 +54,14 @@
                             <a th:href="@{/lens-page/page-lens-id/{id}(id=${el.id})}"
                                class="text-decoration-none text-reset">
                                 <div class="card custom-card">
-                                    <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
-                                         xmlns="http://www.w3.org/2000/svg" role="img"
-                                         aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice"
-                                         focusable="false"><title>Placeholder</title>
-                                        <rect width="100%" height="100%" fill="#55595c"></rect>
-                                        <text x="50%" y="50%" fill="#eceeef" dy=".3em">тут має бути фото</text>
-                                    </svg>
+                                    <img src="https://www.sony.ua/image/a9b7754673f72cccf7044395d505cbea?fmt=png-alpha&wid=660&hei=660" class="card-img-top" alt="...">
                                     <div class="card-body">
-                                        <p class="card-text" th:text="${el.bayonet}"></p>
-                                        <p class="card-text" th:text="${el.focalLength}"></p>
-                                        <p class="card-text" th:text="${el.lensType}"></p>
+                                        <p class="card-text" th:text="'Байонет: ' + ${el.bayonet}"></p>
+                                        <p class="card-text" th:text="'Фокусна відстань: ' + ${el.focalLength}"></p>
+                                        <p class="card-text" th:text="'Тип Обєктива: ' + ${el.lensType}"></p>
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div>
-                                                <h5 th:text="${el.price}"></h5>
+                                                <h5 th:text="'Ціна: ' + ${el.price}"></h5>
                                             </div>
                                             <div class="btn-group ml-auto">
                                                 <i class="bi bi-bag-plus "></i>

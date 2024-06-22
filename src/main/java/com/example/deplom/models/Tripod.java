@@ -17,6 +17,7 @@ public class Tripod {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private String type; // Тип
+    private String manufacturer; // Виробник
     private String head; // Головка
     private String dimensions; // Розміри (від ? до ?)
     private String material; // Матеріал

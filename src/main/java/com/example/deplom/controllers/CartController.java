@@ -6,7 +6,6 @@ import com.example.deplom.models.User;
 import com.example.deplom.repository.CartRepository;
 import com.example.deplom.repository.OrderRepository;
 import com.example.deplom.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -73,9 +72,12 @@ public class CartController {
 
     @PostMapping("/delete-product-db")
     public ResponseEntity<String> deleteProductDB(@RequestParam Long id) {
-        cartRepository.deleteById(id);
-        return ResponseEntity.ok().body("Item deleted successfully");
+        try {
+            cartRepository.deleteById(id);
+            return ResponseEntity.ok().body("Item deleted successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error deleting item");
+        }
     }
-
 
 }

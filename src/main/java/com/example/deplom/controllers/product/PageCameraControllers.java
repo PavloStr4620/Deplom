@@ -1,4 +1,5 @@
 package com.example.deplom.controllers.product;
+
 import com.example.deplom.models.Camera;
 import com.example.deplom.repository.CameraRepository;
 import com.example.deplom.service.CameraService;
@@ -12,11 +13,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-
 
 @Controller
 @RequestMapping("/camera-page")
@@ -41,14 +39,14 @@ public class PageCameraControllers {
     }
 
     @GetMapping("/page-camera-id/{id}")
-    public String creatingProductPageCamera(Model model, @PathVariable("id") Long id){
+    public String creatingProductPageCamera(Model model, @PathVariable("id") Long id) {
         Optional<Camera> camera_id = cameraRepository.findById(id);
         model.addAttribute("camera_id", camera_id);
         return "Product/Camera/productPageCamera";
     }
 
     @GetMapping("/page-create-camera")
-    public String pageCreateCamera(){
+    public String pageCreateCamera() {
         return "Product/Camera/pageAddCamera";
     }
 
@@ -62,7 +60,7 @@ public class PageCameraControllers {
                                 @RequestParam String multiplicityOfIncrease,
                                 @RequestParam String displayDiagonal,
                                 @RequestParam double price
-                                ){
+    ) {
 
         Camera camera = new Camera();
         camera.setBrand(brand);
@@ -80,7 +78,7 @@ public class PageCameraControllers {
     }
 
     @GetMapping("/page-update-camera")
-    public String pageUpdateCamera(@RequestParam("id") Long id, Model model){
+    public String pageUpdateCamera(@RequestParam("id") Long id, Model model) {
         Optional<Camera> camera_id = cameraRepository.findById(id);
         model.addAttribute("camera_id", camera_id);
         return "Product/Camera/pageUpdateCamera";
@@ -97,7 +95,7 @@ public class PageCameraControllers {
                                    @RequestParam String multiplicityOfIncrease,
                                    @RequestParam String displayDiagonal,
                                    @RequestParam double price
-    ){
+    ) {
         Optional<Camera> cameraOptional = cameraRepository.findById(id);
         Camera camera = cameraOptional.orElseThrow(() -> new NotFoundException("Not found camera by id" + id));
 
@@ -116,7 +114,7 @@ public class PageCameraControllers {
     }
 
     @GetMapping("/delete-camera")
-    public String deleteCameraById(@RequestParam("id") Long id){
+    public String deleteCameraById(@RequestParam("id") Long id) {
         cameraService.deleteCameraById(id);
         return "redirect:/camera-page";
     }
@@ -127,57 +125,4 @@ public class PageCameraControllers {
         model.addAttribute("search_camera", search_camera);
         return "Product/Camera/searchCamera";
     }
-
-//    @GetMapping("/search-camera")
-//    public String searchCamera(@RequestParam(value = "brand", required = false) String brand,
-//                               @RequestParam(value = "sort", required = false) String sort,
-//                               @RequestParam(value = "priceFrom", required = false) Double priceFrom,
-//                               @RequestParam(value = "priceTo", required = false) Double priceTo,
-//                               Model model) {
-//        List<Camera> search_camera;
-//        if (brand != null && !brand.isEmpty()) {
-//            search_camera = cameraService.findCamerasByBrand(brand);
-//        } else {
-//            search_camera = cameraService.getAllCamera();
-//        }
-//
-//        if (priceFrom != null || priceTo != null) {
-//            final Double finalPriceFrom = (priceFrom != null) ? priceFrom : Double.MIN_VALUE;
-//            final Double finalPriceTo = (priceTo != null) ? priceTo : Double.MAX_VALUE;
-//
-//            search_camera = search_camera.stream()
-//                    .filter(camera -> camera.getPrice() >= finalPriceFrom && camera.getPrice() <= finalPriceTo)
-//                    .collect(Collectors.toList());
-//        }
-//
-//        if (sort != null) {
-//            switch (sort) {
-//                case "priceAsc":
-//                    search_camera = search_camera.stream()
-//                            .sorted(Comparator.comparing(Camera::getPrice))
-//                            .collect(Collectors.toList());
-//                    break;
-//                case "priceDesc":
-//                    search_camera = search_camera.stream()
-//                            .sorted(Comparator.comparing(Camera::getPrice).reversed())
-//                            .collect(Collectors.toList());
-//                    break;
-//                case "nameAsc":
-//                    search_camera = search_camera.stream()
-//                            .sorted(Comparator.comparing(Camera::getModel))
-//                            .collect(Collectors.toList());
-//                    break;
-//                case "nameDesc":
-//                    search_camera = search_camera.stream()
-//                            .sorted(Comparator.comparing(Camera::getModel).reversed())
-//                            .collect(Collectors.toList());
-//                    break;
-//            }
-//        }
-//
-//        model.addAttribute("search_camera", search_camera);
-//        return "Product/Camera/searchCamera";
-//    }
-
-
 }

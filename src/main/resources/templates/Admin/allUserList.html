@@ -18,6 +18,7 @@
             <th scope="col">ID</th>
             <th scope="col">Ім'я користувача</th>
             <th scope="col">Електронна адреса</th>
+            <th scope="col">Role</th>
             <!-- Додайте інші потрібні поля -->
         </tr>
         </thead>
@@ -27,6 +28,7 @@
             <td th:text="${user.id}"></td>
             <td th:text="${user.username}"></td>
             <td th:text="${user.email}"></td>
+            <td th:text="${user.role}"></td>
             <!-- Додайте інші потрібні поля -->
         </tr>
         </tbody>

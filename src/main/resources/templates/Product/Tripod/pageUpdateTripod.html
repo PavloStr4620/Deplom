@@ -13,14 +13,15 @@
     <h1>Редагування товару</h1>
 
     <form method="post" th:action="'/tripod-page/page-update-tripod?id=' + ${tripod.id}" class="row g-3">
-        <div class="col-md-6">
-            <label for="type" class="form-label">Тип:</label>
-            <input th:value="${tripod.type}" type="text" class="form-control" id="type" name="type" required>
-        </div>
 
         <div class="col-md-6">
             <label for="head" class="form-label">Фокусна відстань:</label>
             <input th:value="${tripod.head}" type="text" class="form-control" id="head" name="head" required>
+        </div>
+
+        <div class="col-md-6">
+            <label for="type" class="form-label">Тип:</label>
+            <input th:value="${tripod.type}" type="text" class="form-control" id="type" name="type" required>
         </div>
 
         <div class="col-md-6">
@@ -29,7 +30,7 @@
         </div>
 
         <div class="col-md-6">
-            <label for="material" class="form-label">Матеріал:</label>
+            <label for="material" class="form-label">Матеріал корпуса:</label>
             <input th:value="${tripod.material}" type="text" class="form-control" id="material" name="material" required>
         </div>
 

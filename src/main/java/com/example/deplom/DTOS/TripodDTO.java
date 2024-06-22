@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class TripodDTO {
     private String type; // Тип
+    private String manufacturer; // Виробник
     private String head; // Головка
     private String dimensions; // Розміри (від ? до ?)
     private String material; // Матеріал

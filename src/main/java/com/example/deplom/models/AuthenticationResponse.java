@@ -1,6 +1,4 @@
 package com.example.deplom.models;
-
-import com.example.deplom.models.enums.Role;
 import lombok.Getter;
 
 @Getter
@@ -19,5 +17,4 @@ public class AuthenticationResponse {
         this.role = role;
         this.userName = userName;
     }
-
 }

@@ -14,34 +14,104 @@
 
   <form method="post" action="/tripod-page/page-create-tripod" class="row g-3">
     <div class="col-md-6">
-      <label for="type" class="form-label">Тип:</label>
-      <input type="text" class="form-control" id="type" name="type" required>
+      <label for="manufacturer" class="form-label">Виробник:</label>
+      <select class="form-control" id="manufacturer" name="manufacturer" required>
+        <option value="" disabled selected>Виберіть виробника</option>
+        <option value="Arsenal">Arsenal</option>
+        <option value="Beike">Beike</option>
+        <option value="Benro">Benro</option>
+        <option value="E-image">E-image</option>
+        <option value="Hama">Hama</option>
+        <option value="K&F CONCEPT">K&F CONCEPT</option>
+        <option value="Manfrotto">Manfrotto</option>
+        <option value="Miliboo">Miliboo</option>
+        <option value="Puluz">Puluz</option>
+        <option value="Ulanzi">Ulanzi</option>
+        <option value="Vanguard">Vanguard</option>
+        <option value="Velbon">Velbon</option>
+        <option value="Weifeng">Weifeng</option>
+        <option value="Yunteng">Yunteng</option>
+      </select>
     </div>
+
+
+    <div class="col-md-6">
+      <label for="type" class="form-label">Тип:</label>
+      <select class="form-control" id="type" name="type" required>
+        <option value="" disabled selected>Виберіть тип</option>
+        <option value="штатив підлоговий">штатив підлоговий</option>
+        <option value="монопод">монопод</option>
+        <option value="струбцина">струбцина</option>
+        <option value="настільний штатив">настільний штатив</option>
+        <option value="гнучкий штатив">гнучкий штатив</option>
+        <option value="плечовий">плечовий</option>
+      </select>
+    </div>
+
 
     <div class="col-md-6">
       <label for="head" class="form-label">Головка:</label>
-      <input type="text" class="form-control" id="head" name="head" required>
+      <select class="form-control" id="head" name="head" required>
+        <option value="" disabled selected>Виберіть тип головки</option>
+        <option value="без головки">без головки</option>
+        <option value="з головкою">з головкою</option>
+        <option value="знімна головка">знімна головка</option>
+        <option value="знімна площадка">знімна площадка</option>
+      </select>
     </div>
+
 
     <div class="col-md-6">
       <label for="dimensions" class="form-label">Розміри (від ? до ?):</label>
-      <input type="text" class="form-control" id="dimensions" name="dimensions" required>
+      <select class="form-control" id="dimensions" name="dimensions" required>
+        <option value="" disabled selected>Виберіть розміри</option>
+        <option value="≤ 40 см">≤ 40 см</option>
+        <option value="41 - 45 см">41 - 45 см</option>
+        <option value="46-50 см">46-50 см</option>
+        <option value="51-55 см">51-55 см</option>
+        <option value="56-60 см">56-60 см</option>
+        <option value="61-65 см">61-65 см</option>
+        <option value="66-70 см">66-70 см</option>
+        <option value="> 70 см">> 70 см</option>
+      </select>
     </div>
+
 
     <div class="col-md-6">
       <label for="material" class="form-label">Матеріал:</label>
-      <input type="text" class="form-control" id="material" name="material" required>
+      <select class="form-control" id="material" name="material" required>
+        <option value="" disabled selected>Виберіть матеріал</option>
+        <option value="алюміній">алюміній</option>
+        <option value="вуглепластик">вуглепластик</option>
+        <option value="пластик">пластик</option>
+        <option value="сталь">сталь</option>
+      </select>
     </div>
+
 
     <div class="col-md-6">
       <label for="legSection" class="form-label">Секції ніжок:</label>
-      <input type="text" class="form-control" id="legSection" name="legSection" required>
+      <select class="form-control" id="legSection" name="legSection" required>
+        <option value="" disabled selected>Виберіть кількість секцій</option>
+        <option value="3 шт">3 шт</option>
+        <option value="4 шт">4 шт</option>
+        <option value="5 шт">5 шт</option>
+        <option value="6 шт">6 шт</option>
+        <option value="8 шт">8 шт</option>
+      </select>
     </div>
+
 
     <div class="col-md-6">
       <label for="headType" class="form-label">Тип головки:</label>
-      <input type="text" class="form-control" id="headType" name="headType" required>
+      <select class="form-control" id="headType" name="headType" required>
+        <option value="" disabled selected>Виберіть тип головки</option>
+        <option value="2D">2D</option>
+        <option value="3D">3D</option>
+        <option value="кульова">кульова</option>
+      </select>
     </div>
+
 
     <div class="col-md-6">
       <label for="price" class="form-label">Ціна:</label>

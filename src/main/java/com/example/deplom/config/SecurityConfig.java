@@ -56,6 +56,7 @@ public class SecurityConfig {
                                         "/auth/register/**").permitAll()
                                 .requestMatchers(
                                         "/admin/**",
+                                        "/updateUserRole",
                                         "/adminUserList/**",
                                         "/admin/editOrderStatus/**",
                                         "/admin/updateOrderStatus/**",

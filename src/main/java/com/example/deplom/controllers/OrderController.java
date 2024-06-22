@@ -1,4 +1,5 @@
 package com.example.deplom.controllers;
+
 import com.example.deplom.models.Order;
 import com.example.deplom.models.Cart;
 import com.example.deplom.models.OrderItem;
@@ -38,10 +39,8 @@ public class OrderController {
             @RequestParam double totalAmount,
             Model model) {
 
-        // Отримуємо всі товари з корзини користувача
         List<Cart> cartItems = cartRepository.findByUserName(userName);
 
-        // Створення нового замовлення
         Order order = new Order();
         order.setUserName(userName);
         order.setEmail(email);
@@ -54,7 +53,6 @@ public class OrderController {
         order.setSum(totalAmount);
         order.setOrderDate(LocalDateTime.now());
 
-        // Створення товарів замовлення з товарів у корзині
         List<OrderItem> orderItems = new ArrayList<>();
         for (Cart cartItem : cartItems) {
             OrderItem orderItem = new OrderItem();
@@ -65,22 +63,19 @@ public class OrderController {
         }
         order.setItems(orderItems);
 
-        // Збереження замовлення в репозиторій
         orderRepository.save(order);
 
-        // Очищення корзини
         cartRepository.deleteAll(cartItems);
 
-        // Додавання загальної суми до моделі
         model.addAttribute("totalAmount", totalAmount);
-        return "redirect:/userOrders?userName=" + userName; // Повертаємо на сторінку з замовленнями користувача
+        return "redirect:/userOrders?userName=" + userName;
     }
 
     @GetMapping("/userOrders")
     public String getUserOrders(@RequestParam("userName") String userName, Model model) {
         List<Order> orders = orderRepository.findByUserName(userName);
         model.addAttribute("orders", orders);
-        return "cart/userOrders"; // Переконайтеся, що цей шлях співпадає зі шляхом вашого шаблону
+        return "cart/userOrders";
     }
 
     @GetMapping("/admin/editOrderStatus/{orderId}")

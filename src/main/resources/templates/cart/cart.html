@@ -5,50 +5,32 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
-<body>
-
-<div th:replace="~{blocks/header :: header}"></div>
-
-<div class="container my-5">
-    <h2 class="mb-4">Ваша корзина</h2>
-    <div id="cartContent"></div>
-    <div id="emptyCartMessage" class="d-flex flex-column align-items-center"></div>
-    <button onclick="redirectToOrderPage()" class="btn btn-primary mt-3">Оформлення замовлення</button>
-</div>
-
-<!--<div th:replace="~{blocks/footer :: footer}"></div>-->
-
 <script>
     function redirectToOrderPage() {
         const userName = localStorage.getItem('userName');
-        const totalAmount = calculateTotalAmount(); // Потрібно замінити на ваш спосіб обчислення загальної суми
+        const totalAmount = calculateTotalAmount(); // Обчислюємо загальну суму
 
         // Переходимо на сторінку оформлення замовлення з використанням параметрів запиту
         window.location.href = `/cart/an-Order?userName=${encodeURIComponent(userName)}&totalAmount=${encodeURIComponent(totalAmount)}`;
     }
+
     function calculateTotalAmount() {
         let total = 0;
         const cartItems = document.querySelectorAll('.cart-item');
 
         cartItems.forEach(item => {
-            // Отримуємо ціну товару з тексту
             const priceText = item.querySelector('p').textContent;
-            // Виділяємо ціну з тексту, враховуючи "Ціна:" і пробіли
             const price = parseFloat(priceText.split(':')[1].trim());
-            // Додаємо ціну до загальної суми
             total += price;
         });
 
         return total;
     }
 
-
     function loadCart() {
-        // Отримуємо userName з local storage
         const userName = localStorage.getItem('userName');
 
         if (userName) {
-            // Виконуємо GET-запит за допомогою fetch
             fetch(`/cart/load?userName=${encodeURIComponent(userName)}`)
                 .then(response => {
                     if (!response.ok) {
@@ -57,60 +39,71 @@
                     return response.json();
                 })
                 .then(cartData => {
-                    // Обробляємо отримані дані після виконання запиту
                     const cartContent = document.getElementById('cartContent');
                     const emptyCartMessage = document.getElementById('emptyCartMessage');
                     const totalAmount = document.getElementById('totalAmount');
 
                     let total = 0;
-                    cartContent.innerHTML = ''; // Очищуємо контейнер корзини перед додаванням нових елементів
+                    cartContent.innerHTML = '';
 
                     if (cartData.length > 0) {
                         cartData.forEach(item => {
                             const itemElement = document.createElement('div');
                             itemElement.className = 'cart-item';
                             itemElement.innerHTML = `
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <h5>${item.nameProduct}</h5>
-                                        <p>Ціна: ${item.price}</p>
-                                    </div>
-                                    <button type="submit" class="btn btn-danger delete-btn" data-id="${item.id}">Видалити</button>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h5>${item.nameProduct}</h5>
+                                    <p>Ціна: ${item.price}</p>
                                 </div>
-                            `;
+                                <button type="button" class="btn btn-danger delete-btn" data-id="${item.id}">Видалити</button>
+                            </div>
+                        `;
                             cartContent.appendChild(itemElement);
                             total += item.price;
                         });
                         totalAmount.textContent = `Загальна сума: ${total.toFixed(2)} грн`;
+
+                        // Призначаємо обробники подій для кнопок видалення
+                        document.querySelectorAll('.delete-btn').forEach(button => {
+                            button.addEventListener('click', function () {
+                                const itemId = this.getAttribute('data-id');
+                                deleteItem(itemId);
+                            });
+                        });
+
+                        // Показуємо кнопку "Оформлення замовлення"
+                        const orderButton = document.querySelector('.order-button');
+                        orderButton.style.display = "block"; // Показуємо кнопку
                     } else {
                         emptyCartMessage.innerHTML = '<p>Ваша корзина порожня.</p>';
                         totalAmount.textContent = '';
-                    }
 
-                    // Додаємо обробники подій для кнопок видалення
-                    document.querySelectorAll('.delete-btn').forEach(button => {
-                        button.addEventListener('click', function () {
-                            const itemId = this.getAttribute('data-id');
-                            deleteItem(itemId);
-                        });
-                    });
+                        // Якщо корзина порожня, приховуємо кнопку "Оформлення замовлення"
+                        const orderButton = document.querySelector('.order-button');
+                        orderButton.style.display = "none"; // Приховуємо кнопку
+                    }
                 })
                 .catch(error => {
-                    // Обробляємо помилки, якщо вони виникли під час виконання запиту
                     console.error('Виникла помилка під час виконання запиту:', error);
                 });
         } else {
             const emptyCartMessage = document.getElementById('emptyCartMessage');
             emptyCartMessage.innerHTML = '<p>Користувач не знайдений.</p>';
+            const totalAmount = document.getElementById('totalAmount');
             totalAmount.textContent = '';
+
+            // Приховуємо кнопку "Оформлення замовлення", оскільки користувач не знайдений
+            const orderButton = document.querySelector('.order-button');
+            orderButton.style.display = "none"; // Приховуємо кнопку
         }
     }
 
 
     document.addEventListener('DOMContentLoaded', function () {
-        loadCart(); // Завантажуємо корзину при завантаженні сторінки
+        console.log("DOM fully loaded and parsed");
+        loadCart(); // Завантажуємо кошик при завантаженні сторінки
     });
-
     document.querySelectorAll('.delete-btn').forEach(button => {
         button.addEventListener('click', function () {
             const itemId = this.getAttribute('data-id');
@@ -119,6 +112,7 @@
     });
 
     function deleteItem(itemId) {
+        console.log(`Sending delete request for item with id: ${itemId}`);
         fetch(`/cart/delete-product-db?id=${encodeURIComponent(itemId)}`, {
             method: 'POST'
         })
@@ -129,17 +123,27 @@
                 return response.json();
             })
             .then(data => {
-                // Reload the cart after successful deletion
+                console.log(`Item with id: ${itemId} deleted successfully`);
+                // Перезавантажуємо кошик після успішного видалення
                 loadCart();
             })
             .catch(error => {
-                console.error('Error deleting item:', error);
+                console.error('Помилка при видаленні товару:', error);
             });
     }
 
-
 </script>
+<body>
 
+<div th:replace="~{blocks/header :: header}"></div>
+
+<div class="container my-5">
+    <h2 class="mb-4">Ваша корзина</h2>
+    <div id="cartContent"></div>
+    <div id="emptyCartMessage" class="d-flex flex-column align-items-center"></div>
+    <div id="totalAmount" class="mt-3"></div>
+    <button onclick="redirectToOrderPage()" class="btn btn-primary mt-3 order-button">Оформлення замовлення</button>
+</div>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -16,13 +16,13 @@ public class Lens {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    private String bayonet; // Байонет
-    private String focalLength; // Фокусна відстань
-    private String lensType; // Тип Обєктива
-    private String focus; // Фокусування
-    private String manufacturers; // Виробники
-    private String direction; // Напрямок
-    private String matrixFormat; // Формат матриці
-    private String weight; // Вага
-    private double price; // Ціна
+    private String bayonet;
+    private String focalLength;
+    private String lensType;
+    private String focus;
+    private String manufacturers;
+    private String direction;
+    private String matrixFormat;
+    private String weight;
+    private double price;
 }
