@@ -11,7 +11,8 @@
                 <div class="text-end d-flex justify-content-end align-items-center">
                     <a href="/cart" id="cartButton" class="nav-link px-2 text-white" style="display:none;">Кошик</a>
                     <a id="ButtonOrders" class="nav-link px-2 text-white" style="display:none;">Мої закази</a>
-                    <a href="/admin" id="adminButton" class="nav-link px-2 text-white" style="display:none;">Admin</a>
+                    <a id="allOrderUser" class="nav-link px-2 text-white">Замовлення</a>
+                    <a id="allUserList" class="nav-link px-2 text-white">Список користувачів</a>
                     <a href="/loginPage" id="loginButton" class="btn btn-outline-light me-2" role="button" style="display:none;">Login</a>
                     <a href="/registerPage" id="signUpButton" class="btn btn-warning" role="button">Sign-up</a>
                     <a href="" id="logoutButton" class="btn btn-outline-light me-2" role="button" style="display:none;">Logout</a>
@@ -27,50 +28,13 @@
             window.location.href = "/userOrders?userName=" + userName;
         });
 
-
-            document.getElementById("adminButton").addEventListener("click", function (event) {
-            event.preventDefault(); // Prevent redirection to avoid navigating away
-            let token = localStorage.getItem("token"); // Get the token from local storage
-            // Check if the token exists
-            if (token) {
-                // Set the token in the request header
-                let requestOptions = {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': 'Bearer ' + token
-                    },
-                    redirect: 'follow'
-                };
-
-                // Execute the request to the "/admin" page
-                fetch("/admin", requestOptions)
-                    .then(response => {
-                        if (response.ok) {
-                            // If the response is successful, display the received HTML
-                            return response.text();
-                        } else {
-                            console.log('Error:', response.statusText);
-                            return Promise.reject(response);
-                        }
-                    })
-                    .then(html => {
-                        document.open();
-                        document.write(html);
-                        document.close();
-                    })
-                    .catch(error => console.log('error', error));
-            } else {
-                console.log("Token not found.");
-            }
-        });
-
         // Hide or show buttons based on role
         document.addEventListener("DOMContentLoaded", function () {
             let token = localStorage.getItem("token");
             let role = localStorage.getItem("role");
             let logoutButton = document.getElementById("logoutButton");
-            let adminButton = document.getElementById("adminButton");
-            let profileButton = document.getElementById("profileButton");
+            let allOrderUser = document.getElementById("allOrderUser");
+            let allUserList = document.getElementById("allUserList");
             let cartButton = document.getElementById("cartButton");
             let ButtonOrders = document.getElementById("ButtonOrders");
             let loginButton = document.getElementById("loginButton");
@@ -102,18 +66,19 @@
 
                 // Show/hide admin and profile buttons based on role
                 if (role === "ADMIN") {
-                    if (adminButton) {
-                        adminButton.style.display = "block";
+                    if (allOrderUser) {
+                        allOrderUser.style.display = "block";
                     }
-                    if (profileButton) {
-                        profileButton.style.display = "none";
+                    if (allUserList) {
+                        allUserList.style.display = "block";
                     }
-                } else if (role === "USER") {
-                    if (adminButton) {
-                        adminButton.style.display = "none";
+                } else {
+                    // Hide admin buttons if not an admin
+                    if (allOrderUser) {
+                        allOrderUser.style.display = "none";
                     }
-                    if (profileButton) {
-                        profileButton.style.display = "block";
+                    if (allUserList) {
+                        allUserList.style.display = "none";
                     }
                 }
             } else {
@@ -121,10 +86,17 @@
                 if (logoutButton) {
                     logoutButton.style.display = "none";
                 }
-
                 // Show the "Login" button if the token is missing
                 if (loginButton) {
                     loginButton.style.display = "block";
+                }
+
+                // Hide admin buttons if not logged in
+                if (allOrderUser) {
+                    allOrderUser.style.display = "none";
+                }
+                if (allUserList) {
+                    allUserList.style.display = "none";
                 }
             }
 
@@ -142,6 +114,72 @@
                     // Redirect the user to the main page
                     window.location.href = "/main"; // Replace "/loginPage" with the URL you want to redirect the user to
                 });
+            }
+        });
+
+        document.getElementById("allOrderUser").addEventListener("click", function (event) {
+            event.preventDefault();
+            let token = localStorage.getItem("token");
+            // Check if the token exists
+            if (token) {
+                let requestOptions = {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': 'Bearer ' + token
+                    },
+                    redirect: 'follow'
+                };
+
+                fetch("/adminOrders", requestOptions)
+                    .then(response => {
+                        if (response.ok) {
+                            return response.text();
+                        } else {
+                            console.log('Error:', response.statusText);
+                            return Promise.reject(response);
+                        }
+                    })
+                    .then(html => {
+                        document.open();
+                        document.write(html);
+                        document.close();
+                    })
+                    .catch(error => console.log('error', error));
+            } else {
+                console.log("Token not found.");
+            }
+        });
+
+        document.getElementById("allUserList").addEventListener("click", function (event) {
+            event.preventDefault();
+            let token = localStorage.getItem("token");
+            // Check if the token exists
+            if (token) {
+                let requestOptions = {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': 'Bearer ' + token
+                    },
+                    redirect: 'follow'
+                };
+
+                fetch("/adminUserList", requestOptions)
+                    .then(response => {
+                        if (response.ok) {
+                            return response.text();
+                        } else {
+                            console.log('Error:', response.statusText);
+                            return Promise.reject(response);
+                        }
+                    })
+                    .then(html => {
+                        document.open();
+                        document.write(html);
+                        document.close();
+                    })
+                    .catch(error => console.log('error', error));
+            } else {
+                console.log("Token not found.");
             }
         });
     </script>
